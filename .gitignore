@@ -8,6 +8,9 @@ venv/
 .env
 uv.lock
 
+# Packaging output
+/build/
+
 # Test/coverage
 .pytest_cache/
 .coverage
