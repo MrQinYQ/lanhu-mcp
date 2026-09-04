@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
     ca-certificates \
+    nodejs \
     fonts-liberation \
     libasound2 \
     libatk-bridge2.0-0 \
@@ -51,6 +52,7 @@ RUN playwright install-deps chromium
 
 # 复制MCP服务器文件
 COPY lanhu_mcp_server.py .
+COPY lanhu_codegen ./lanhu_codegen
 
 # 创建数据和日志目录
 RUN mkdir -p /app/data /app/logs
@@ -64,4 +66,3 @@ EXPOSE 8000
 
 # 运行MCP服务器（使用HTTP传输）
 CMD ["python", "lanhu_mcp_server.py"]
-

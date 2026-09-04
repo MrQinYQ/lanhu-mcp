@@ -1,0 +1,8 @@
+{
+  "capturedAt": "2026-09-04T04:18:22.255Z",
+  "source": "Independent reads of the visible official CodeMirror editors using select-all and DOM textarea values; long values were read in 75,000-character chunks.",
+  "designUrl": "https://lanhuapp.com/web/#/item/project/detailDetach?pid=30fd9a8a-d11d-4e07-b3dc-3caa63a7f44b&project_id=30fd9a8a-d11d-4e07-b3dc-3caa63a7f44b&image_id=42824a80-7d88-4793-99ad-6c22296b9469&fromEditor=true",
+  "editorUrl": "https://dds.lanhuapp.com/#/?version_id=d4e341f9-71f7-4fa7-82b8-e9207f842741&source=detailDetachTab&plugin=figma&plugin_version=1.2.24",
+  "displayName": "聚合管理 · 版本5",
+  "versionId": "d4e341f9-71f7-4fa7-82b8-e9207f842741"
+}

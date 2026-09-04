@@ -1,0 +1,209 @@
+{
+  "componentName": "lanhupage",
+  "type": "lanhupage",
+  "id": "page",
+  "props": {
+    "className": "page",
+    "style": {
+      "width": 375,
+      "height": 500,
+      "background": "white"
+    }
+  },
+  "style": {
+    "width": 375,
+    "height": 500,
+    "background": "white"
+  },
+  "children": [
+    {
+      "componentName": "lanhublock",
+      "type": "lanhublock",
+      "id": "list",
+      "props": {
+        "className": "list",
+        "style": {
+          "width": 300,
+          "flexDirection": "row"
+        }
+      },
+      "style": {
+        "width": 300,
+        "flexDirection": "row"
+      },
+      "children": [
+        {
+          "componentName": "lanhublock",
+          "type": "lanhublock",
+          "id": "row",
+          "props": {
+            "className": "row",
+            "style": {
+              "marginRight": 10,
+              "marginBottom": 20
+            }
+          },
+          "style": {
+            "marginRight": 10,
+            "marginBottom": 20
+          },
+          "children": [
+            {
+              "componentName": "lanhutext",
+              "type": "lanhutext",
+              "id": "text",
+              "props": {
+                "className": "text",
+                "style": {
+                  "fontSize": 16.7,
+                  "lineHeight": 24,
+                  "color": "black"
+                },
+                "text": "{{this.item.content.label}}"
+              },
+              "style": {
+                "fontSize": 16.7,
+                "lineHeight": 24,
+                "color": "black"
+              },
+              "children": [],
+              "data": {
+                "value": "this.item.content.label"
+              },
+              "styleObj": {
+                "color": "item.content.color"
+              }
+            },
+            {
+              "componentName": "lanhuimage",
+              "type": "lanhuimage",
+              "id": "image",
+              "props": {
+                "className": "image",
+                "style": {
+                  "width": 40,
+                  "height": 40
+                },
+                "src": "{{this.item.icon}}"
+              },
+              "style": {
+                "width": 40,
+                "height": 40
+              },
+              "children": [],
+              "data": {
+                "value": "this.item.icon"
+              }
+            },
+            {
+              "componentName": "lanhutext",
+              "type": "lanhutext",
+              "id": "optional",
+              "props": {
+                "className": "optional",
+                "style": {
+                  "fontSize": 11
+                },
+                "text": "optional"
+              },
+              "style": {
+                "fontSize": 11
+              },
+              "children": [],
+              "data": {
+                "value": "fixed"
+              },
+              "specialSlot": true,
+              "slot": 2,
+              "condition": "{{this.item.slot2}}"
+            }
+          ],
+          "nthConfig": [
+            "2n",
+            "2n"
+          ],
+          "styleObj": {
+            "background": "item.fill"
+          }
+        }
+      ],
+      "loopData": [
+        {
+          "content": {
+            "label": "First",
+            "color": "#f00"
+          },
+          "icon": "https://example.org/a.png",
+          "fill": "red",
+          "slot2": "present"
+        },
+        {
+          "content": {
+            "label": "Second",
+            "color": "#00f"
+          },
+          "icon": "https://example.org/b.png",
+          "fill": "blue"
+        }
+      ]
+    },
+    {
+      "componentName": "lanhutext",
+      "type": "lanhutext",
+      "id": "input",
+      "props": {
+        "className": "input",
+        "style": {
+          "width": 100,
+          "height": 30,
+          "fontSize": 15
+        },
+        "text": "Name"
+      },
+      "style": {
+        "width": 100,
+        "height": 30,
+        "fontSize": 15
+      },
+      "children": [],
+      "uiType": "InputArea",
+      "uiTypeProb": {
+        "placeholder": "Name"
+      },
+      "condition": "{{this.visible}}"
+    },
+    {
+      "componentName": "lanhubutton",
+      "type": "lanhubutton",
+      "id": "button",
+      "props": {
+        "className": "button",
+        "style": {
+          "borderWidth": 1,
+          "margin": "10px 20px",
+          "padding": "0px",
+          "background": "url(example.png) 10px 20px no-repeat",
+          "WebkitLineClamp": 2,
+          "fontWeight": "600",
+          "opacity": 0.5,
+          "flexDirection": "column"
+        }
+      },
+      "style": {
+        "borderWidth": 1,
+        "margin": "10px 20px",
+        "padding": "0px",
+        "background": "url(example.png) 10px 20px no-repeat",
+        "WebkitLineClamp": 2,
+        "fontWeight": "600",
+        "opacity": 0.5,
+        "flexDirection": "column"
+      },
+      "children": [],
+      "alignJustify": {
+        "justifyContent": "space-between",
+        "alignItems": "center"
+      }
+    }
+  ]
+}

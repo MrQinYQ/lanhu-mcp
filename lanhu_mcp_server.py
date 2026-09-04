@@ -152,423 +152,7 @@ ROLE_MAPPING_RULES = [
 
 # ==================== 设计图JSON转HTML转换器 ====================
 
-_UNITLESS_PROPERTIES = {'zIndex', 'fontWeight', 'opacity', 'flex', 'flexGrow', 'flexShrink', 'order'}
-
-COMMON_CSS_FOR_DESIGN = """
-body * {
-  box-sizing: border-box;
-  flex-shrink: 0;
-}
-body {
-  font-family: PingFangSC-Regular, Roboto, Helvetica Neue, Helvetica, Tahoma,
-    Arial, PingFang SC-Light, Microsoft YaHei;
-}
-input {
-  background-color: transparent;
-  border: 0;
-}
-button {
-  margin: 0;
-  padding: 0;
-  border: 1px solid transparent;
-  outline: none;
-  background-color: transparent;
-}
-button:active {
-  opacity: 0.6;
-}
-.flex-col {
-  display: flex;
-  flex-direction: column;
-}
-.flex-row {
-  display: flex;
-  flex-direction: row;
-}
-.justify-start {
-  display: flex;
-  justify-content: flex-start;
-}
-.justify-center {
-  display: flex;
-  justify-content: center;
-}
-.justify-end {
-  display: flex;
-  justify-content: flex-end;
-}
-.justify-evenly {
-  display: flex;
-  justify-content: space-evenly;
-}
-.justify-around {
-  display: flex;
-  justify-content: space-around;
-}
-.justify-between {
-  display: flex;
-  justify-content: space-between;
-}
-.align-start {
-  display: flex;
-  align-items: flex-start;
-}
-.align-center {
-  display: flex;
-  align-items: center;
-}
-.align-end {
-  display: flex;
-  align-items: flex-end;
-}
-"""
-
-
-def _camel_to_kebab(s: str) -> str:
-    """驼峰命名转换为CSS短横线命名"""
-    return re.sub(r'([A-Z])', lambda m: f'-{m.group(1).lower()}', s)
-
-
-def _format_css_value(key: str, value) -> str:
-    """格式化CSS值，自动添加px单位"""
-    if value is None:
-        return ''
-    if isinstance(value, (int, float)):
-        if value == 0:
-            return '0'
-        return str(value) if key in _UNITLESS_PROPERTIES else f'{value}px'
-    if isinstance(value, str):
-        # 处理rgba格式
-        if 'rgba(' in value:
-            def replace_rgba(match):
-                r, g, b, a = match.groups()
-                alpha = float(a) if '.' in a else int(a)
-                return f'rgba({r}, {g}, {b}, {alpha})'
-            return re.sub(r'rgba\(([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+)\)', replace_rgba, value)
-        # 检查字符串形式的数字（fontSize可能是"14"或"14px"）
-        if re.match(r'^\d+$', value) and key not in _UNITLESS_PROPERTIES:
-            return '0' if value == '0' else f'{value}px'
-    return str(value)
-
-
-def _merge_padding(styles: dict) -> None:
-    """合并padding四边属性"""
-    pt = styles.get('paddingTop')
-    pr = styles.get('paddingRight')
-    pb = styles.get('paddingBottom')
-    pl = styles.get('paddingLeft')
-    
-    if pt is not None and pr is not None and pb is not None and pl is not None:
-        pt_val = pt or 0
-        pr_val = pr or 0
-        pb_val = pb or 0
-        pl_val = pl or 0
-        
-        if pt_val == pb_val and pl_val == pr_val:
-            if pt_val == pl_val:
-                styles['padding'] = f'{pt_val}px'
-            else:
-                styles['padding'] = f'{pt_val}px {pr_val}px'
-        else:
-            styles['padding'] = f'{pt_val}px {pr_val}px {pb_val}px {pl_val}px'
-        
-        for k in ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft']:
-            styles.pop(k, None)
-
-
-def _merge_margin(styles: dict) -> None:
-    """合并margin四边属性"""
-    mt = styles.get('marginTop')
-    mr = styles.get('marginRight')
-    mb = styles.get('marginBottom')
-    ml = styles.get('marginLeft')
-    
-    if mt is not None or mr is not None or mb is not None or ml is not None:
-        mt_val = mt or 0
-        mr_val = mr or 0
-        mb_val = mb or 0
-        ml_val = ml or 0
-        
-        if mt_val == 0 and mr_val == 0 and mb_val == 0 and ml_val == 0:
-            pass  # 全是0，不输出
-        elif mt_val == mb_val and ml_val == mr_val:
-            if mt_val == ml_val:
-                styles['margin'] = f'{mt_val}px'
-            else:
-                styles['margin'] = f'{mt_val}px {mr_val}px'
-        else:
-            styles['margin'] = f'{mt_val}px {mr_val}px {mb_val}px {ml_val}px'
-        
-        for k in ['marginTop', 'marginRight', 'marginBottom', 'marginLeft']:
-            styles.pop(k, None)
-
-
-def _should_use_flex(node: dict) -> bool:
-    """判断节点是否使用flex布局"""
-    if not node:
-        return False
-    node_style = node.get('style', {})
-    node_props = node.get('props', {})
-    node_props_style = node_props.get('style', {})
-    style = {**node_style, **node_props_style}
-    return style.get('display') == 'flex' or style.get('flexDirection') is not None
-
-
-def _get_flex_classes(node: dict) -> list:
-    """获取flex相关的CSS类名列表"""
-    classes = []
-    if not _should_use_flex(node):
-        return classes
-    
-    node_style = node.get('style', {})
-    node_props = node.get('props', {})
-    node_props_style = node_props.get('style', {})
-    style = {**node_style, **node_props_style}
-    class_name = node_props.get('className', '')
-    
-    # Flex方向
-    flex_direction = style.get('flexDirection')
-    if flex_direction == 'column' or 'flex-col' in class_name:
-        classes.append('flex-col')
-    elif flex_direction == 'row' or 'flex-row' in class_name:
-        classes.append('flex-row')
-    
-    # 主轴对齐
-    justify = node.get('alignJustify', {}).get('justifyContent') or style.get('justifyContent')
-    if justify == 'space-between':
-        classes.append('justify-between')
-    elif justify == 'center':
-        classes.append('justify-center')
-    elif justify == 'flex-end':
-        classes.append('justify-end')
-    elif justify == 'flex-start':
-        classes.append('justify-start')
-    elif justify == 'space-around':
-        classes.append('justify-around')
-    elif justify == 'space-evenly':
-        classes.append('justify-evenly')
-    
-    # 交叉轴对齐
-    align = node.get('alignJustify', {}).get('alignItems') or style.get('alignItems')
-    if align == 'flex-start':
-        classes.append('align-start')
-    elif align == 'center':
-        classes.append('align-center')
-    elif align == 'flex-end':
-        classes.append('align-end')
-    
-    return classes
-
-
-def _clean_styles(node: dict, flex_classes: list) -> dict:
-    """清理样式，移除被flex类覆盖的标准值"""
-    node_props = node.get('props', {})
-    props_style = node_props.get('style', {})
-    styles = {}
-    
-    # 定义被flex类完全覆盖的标准值
-    standard_justify = {'flex-start', 'center', 'flex-end', 'space-between', 'space-around', 'space-evenly'}
-    standard_align = {'flex-start', 'center', 'flex-end'}
-    
-    for key, value in props_style.items():
-        # 跳过display和flexDirection（由flex-col/flex-row类完全覆盖）
-        if key in ('display', 'flexDirection'):
-            if flex_classes:
-                continue
-        
-        # justifyContent: 只跳过标准值
-        if key == 'justifyContent' and flex_classes:
-            if value in standard_justify:
-                continue
-        
-        # alignItems: 只跳过标准值
-        if key == 'alignItems' and flex_classes:
-            if value in standard_align:
-                continue
-        
-        # 跳过static定位
-        if key == 'position' and value == 'static':
-            continue
-        
-        # 跳过visible溢出
-        if key == 'overflow' and value == 'visible':
-            continue
-        
-        styles[key] = value
-    
-    # 合并padding和margin
-    if any(k in styles for k in ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft']):
-        _merge_padding(styles)
-    if any(k in styles for k in ['marginTop', 'marginRight', 'marginBottom', 'marginLeft']):
-        _merge_margin(styles)
-    
-    return styles
-
-
-def _get_loop_arr(node: dict) -> list:
-    """取节点的 loop 数据：优先 loop，其次 loopData。"""
-    if not node:
-        return []
-    arr = node.get('loop') or node.get('loopData')
-    return arr if isinstance(arr, list) else []
-
-
-def _generate_css(node: dict, css_rules: dict, loop_suffixes: list | None = None) -> None:
-    """递归生成CSS规则。loop_suffixes 非空时，当前子树为循环模板，类名按 -0/-1/... 展开。"""
-    if not node:
-        return
-
-    loop_arr = _get_loop_arr(node) if node.get('loopType') else []
-    if loop_arr and not loop_suffixes:
-        loop_suffixes = [str(i) for i in range(len(loop_arr))]
-
-    node_props = node.get('props', {})
-    class_name = node_props.get('className')
-    if class_name:
-        flex_classes = _get_flex_classes(node)
-        styles = _clean_styles(node, flex_classes)
-        style_entries = list(styles.items())
-        if style_entries or node.get('type') == 'lanhutext':
-            css_props = []
-            for key, value in style_entries:
-                css_key = _camel_to_kebab(key)
-                css_value = _format_css_value(key, value)
-                if css_value:
-                    css_props.append(f'  {css_key}: {css_value};')
-            content = '\n'.join(css_props) if css_props else ''
-        else:
-            content = ''
-        if loop_suffixes:
-            for suf in loop_suffixes:
-                css_rules[f'{class_name}-{suf}'] = content
-        else:
-            css_rules[class_name] = content
-
-    children = node.get('children', [])
-    for child in children:
-        _generate_css(child, css_rules, loop_suffixes)
-
-
-def _resolve_loop_placeholder(value: str, loop_item: dict) -> str:
-    """this.item.xxx -> loop_item.get('xxx', '')"""
-    if not value or not isinstance(loop_item, dict):
-        return value or ''
-    s = str(value).strip()
-    m = re.match(r'^this\.item\.(\w+)$', s)
-    return loop_item.get(m.group(1), '') if m else value
-
-
-def _generate_html(
-    node: dict,
-    indent: int = 2,
-    loop_context: tuple[list, int] | None = None,
-) -> str:
-    """递归生成HTML结构。loop_context=(loop_list, index) 时当前为循环项，类名加 -index，占位符用 loop 数据替换。"""
-    if not node:
-        return ''
-
-    loop_item = loop_context[0][loop_context[1]] if loop_context else None
-    loop_index = loop_context[1] if loop_context else None
-
-    spaces = ' ' * indent
-    flex_classes = _get_flex_classes(node)
-    node_props = node.get('props', {})
-    class_name = node_props.get('className', '')
-    if loop_index is not None and class_name:
-        class_name = f'{class_name}-{loop_index}'
-    all_classes = ' '.join([c for c in [class_name] + flex_classes if c])
-
-    node_type = node.get('type')
-
-    if node_type == 'lanhutext':
-        text = node.get('data', {}).get('value') or node_props.get('text') or ''
-        if loop_item is not None and text and re.match(r'^this\.item\.\w+$', str(text).strip()):
-            text = _resolve_loop_placeholder(text, loop_item)
-        elif text and re.match(r'^this\.item\.\w+$', str(text).strip()):
-            text = ''
-        return f'{spaces}<span class="{all_classes}">{text}</span>'
-
-    if node_type == 'lanhuimage':
-        src = node.get('data', {}).get('value') or node_props.get('src') or ''
-        if loop_item is not None and src and re.match(r'^this\.item\.\w+$', str(src).strip()):
-            src = _resolve_loop_placeholder(src, loop_item)
-        elif src and re.match(r'^this\.item\.\w+$', str(src).strip()):
-            src = ''
-        return f'{spaces}<img\n{spaces}  class="{all_classes}"\n{spaces}  referrerpolicy="no-referrer"\n{spaces}  src="{src}"\n{spaces}/>'
-
-    if node_type == 'lanhubutton':
-        children = node.get('children', [])
-        children_html = '\n'.join([
-            _generate_html(c, indent + 2, loop_context) for c in children
-        ])
-        return f'{spaces}<button class="{all_classes}">\n{children_html}\n{spaces}</button>'
-
-    tag = 'div'
-    children = node.get('children', [])
-    loop_arr = _get_loop_arr(node) if node.get('loopType') else []
-
-    if loop_arr and loop_context is None:
-        parts = []
-        for i in range(len(loop_arr)):
-            ctx = (loop_arr, i)
-            for child in children:
-                parts.append(_generate_html(child, indent + 2, ctx))
-        children_html = '\n'.join(parts)
-        return f'{spaces}<{tag} class="{all_classes}">\n{children_html}\n{spaces}</{tag}>'
-
-    if children:
-        children_html = '\n'.join([
-            _generate_html(c, indent + 2, loop_context) for c in children
-        ])
-        return f'{spaces}<{tag} class="{all_classes}">\n{children_html}\n{spaces}</{tag}>'
-    return f'{spaces}<{tag} class="{all_classes}"></{tag}>'
-
-
-def convert_lanhu_to_html(json_data: dict) -> str:
-    """
-    将蓝湖设计图JSON转换为HTML+CSS
-    
-    Args:
-        json_data: 蓝湖设计图Schema JSON
-        
-    Returns:
-        完整的HTML字符串（含嵌入式CSS）
-    """
-    css_rules = {}
-    
-    # 生成CSS
-    _generate_css(json_data, css_rules)
-    
-    # 组装CSS字符串
-    css_parts = []
-    for class_name, props in css_rules.items():
-        if props:
-            css_parts.append(f'.{class_name} {{\n{props}\n}}')
-        else:
-            css_parts.append(f'.{class_name} {{\n}}')
-    
-    css_string = '\n\n'.join(css_parts)
-    css_string += COMMON_CSS_FOR_DESIGN
-    
-    # 生成HTML
-    body_html = _generate_html(json_data, 4)
-    
-    html = f'''<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-{css_string}
-    </style>
-  </head>
-  <body>
-{body_html}
-  </body>
-</html>'''
-    
-    return html
+from lanhu_codegen import convert_lanhu_to_html, generate_design_files, inline_design_files
 
 
 def _extract_design_tokens(sketch_data: dict) -> str:
@@ -762,886 +346,6 @@ def _extract_design_tokens(sketch_data: dict) -> str:
     return '\n\n'.join(tokens)
 
 
-def _oc_to_css(oc_code: str) -> str:
-    """将蓝湖标注面板的 Objective-C 代码转换为 CSS 属性。"""
-    import re
-    css = []
-    m = re.search(r'CGRectMake\(([\d.]+),([\d.]+),([\d.]+),([\d.]+)\)', oc_code)
-    if m:
-        css.append(f"left:{m.group(1)}px;top:{m.group(2)}px;width:{m.group(3)}px;height:{m.group(4)}px")
-
-    for pat in re.finditer(r'backgroundColor = \[UIColor colorWithRed:([\d]+)/255\.0 green:([\d]+)/255\.0 blue:([\d]+)/255\.0 alpha:([\d.]+)\]', oc_code):
-        r, g, b, a = pat.group(1), pat.group(2), pat.group(3), pat.group(4)
-        css.append(f"background-color:rgba({r},{g},{b},{a})")
-
-    m = re.search(r'cornerRadius = ([\d.]+)', oc_code)
-    if m:
-        css.append(f"border-radius:{m.group(1)}px")
-
-    shadow_color = re.search(r'shadowColor = \[UIColor colorWithRed:([\d]+)/255\.0 green:([\d]+)/255\.0 blue:([\d]+)/255\.0 alpha:([\d.]+)\]', oc_code)
-    shadow_offset = re.search(r'shadowOffset = CGSizeMake\(([\d.-]+),([\d.-]+)\)', oc_code)
-    shadow_radius = re.search(r'shadowRadius = ([\d.]+)', oc_code)
-    if shadow_color and shadow_offset:
-        sr, sg, sb, sa = shadow_color.group(1), shadow_color.group(2), shadow_color.group(3), shadow_color.group(4)
-        sx, sy = shadow_offset.group(1), shadow_offset.group(2)
-        blur = shadow_radius.group(1) if shadow_radius else '0'
-        css.append(f"box-shadow:{sx}px {sy}px {blur}px rgba({sr},{sg},{sb},{sa})")
-
-    border_w = re.search(r'borderWidth = ([\d.]+)', oc_code)
-    border_c = re.search(r'borderColor = \[UIColor colorWithRed:([\d]+)/255\.0 green:([\d]+)/255\.0 blue:([\d]+)/255\.0 alpha:([\d.]+)\]', oc_code)
-    if border_w and border_c:
-        bw = border_w.group(1)
-        br, bg, bb, ba = border_c.group(1), border_c.group(2), border_c.group(3), border_c.group(4)
-        css.append(f"border:{bw}px solid rgba({br},{bg},{bb},{ba})")
-
-    if 'fontWithName:@"' in oc_code:
-        fm = re.search(r'fontWithName:@"([^"]+)" size: ([\d.]+)', oc_code)
-        if fm:
-            css.append(f"font-family:\"{fm.group(1)}\",sans-serif;font-size:{fm.group(2)}px")
-
-    fc = re.search(r'ForegroundColorAttributeName: \[UIColor colorWithRed:([\d]+)/255\.0 green:([\d]+)/255\.0 blue:([\d]+)/255\.0 alpha:([\d.]+)\]', oc_code)
-    if fc:
-        css.append(f"color:rgba({fc.group(1)},{fc.group(2)},{fc.group(3)},{fc.group(4)})")
-
-    return ';'.join(css)
-
-
-def _get_sketch_design_scale(sketch_data: dict) -> float:
-    """从 Sketch/Figma 元数据中获取设计坐标缩放比。"""
-    meta = sketch_data.get('meta') or {}
-    device = str(sketch_data.get('device') or meta.get('device') or '').lower()
-    for scale in (3, 2, 1):
-        if f'@{scale}x' in device:
-            return float(scale)
-    # Figma artboard 的 frame 已经是逻辑坐标；旧 board 数据默认按 @2x 导出。
-    return 1.0 if 'artboard' in sketch_data else 2.0
-
-
-def convert_sketch_to_html(sketch_data: dict, design_scale: float = 2.0,
-                           design_img_url: str = "") -> str:
-    """
-    将 Sketch/PSD JSON 转换为 HTML+CSS。
-    策略：设计原图 background-image 裁剪 + 文字/切图叠加 + data-css 标注。
-    """
-    import math, re
-    scale = design_scale or 2.0
-
-    def px(v):
-        if v is None:
-            return 0
-        return round(float(v) / scale * 10) / 10
-
-    def color_css(c, opacity=100):
-        if not c or not isinstance(c, dict):
-            return None
-        if 'value' in c:
-            return c['value']
-        r = round(c.get('red', c.get('r', 0)))
-        g = round(c.get('green', c.get('g', 0)))
-        b = round(c.get('blue', c.get('b', 0)))
-        a = round(opacity / 100, 2) if opacity < 100 else 1
-        return f"rgba({r},{g},{b},{a})" if a < 1 else f"rgb({r},{g},{b})"
-
-    def get_opacity(layer):
-        bo = layer.get('blendOptions') or {}
-        if 'opacity' in bo:
-            op = bo['opacity']
-            return op.get('value', 100) if isinstance(op, dict) else op
-        return 100
-
-    def extract_border_radius(layer):
-        path = layer.get('path') or {}
-        comps = path.get('pathComponents') or []
-        if not comps:
-            return None
-        origin = comps[0].get('origin') or {}
-        radii = origin.get('radii')
-        if not radii:
-            return None
-        r = [px(v) for v in radii]
-        if len(set(r)) == 1 and r[0] > 0:
-            return f"{r[0]}px"
-        if any(v > 0 for v in r):
-            return f"{r[0]}px {r[1]}px {r[2]}px {r[3]}px"
-        return None
-
-    def extract_shadow(effects):
-        shadows = []
-        for key in ('dropShadow', 'innerShadow'):
-            fx = effects.get(key)
-            if not fx or not fx.get('enabled'):
-                continue
-            c = fx.get('color') or {}
-            color = color_css(c)
-            if not color:
-                continue
-            op_obj = fx.get('opacity') or {}
-            op_val = op_obj.get('value', 100) if isinstance(op_obj, dict) else 100
-            if op_val < 100:
-                r = round(c.get('red', c.get('r', 0)))
-                g = round(c.get('green', c.get('g', 0)))
-                b = round(c.get('blue', c.get('b', 0)))
-                color = f"rgba({r},{g},{b},{round(op_val/100, 2)})"
-
-            angle_obj = fx.get('localLightingAngle') or {}
-            angle_deg = angle_obj.get('value', 90) if isinstance(angle_obj, dict) else 90
-            angle_rad = math.radians(angle_deg)
-            dist = px(fx.get('distance', 0))
-            blur = px(fx.get('blur', 0))
-            spread = px(fx.get('chokeMatte', 0))
-            ox = round(-dist * math.cos(angle_rad) * 10) / 10
-            oy = round(dist * math.sin(angle_rad) * 10) / 10
-
-            inset = "inset " if key == 'innerShadow' else ""
-            spread_str = f" {spread}px" if spread else ""
-            shadows.append(f"{inset}{ox}px {oy}px {blur}px{spread_str} {color}")
-        return ','.join(shadows) if shadows else None
-
-    def extract_border(effects):
-        stroke = effects.get('frameFX') or effects.get('solidFill')
-        if not stroke or not stroke.get('enabled'):
-            return None
-        size = px(stroke.get('size', 1))
-        c = stroke.get('color') or {}
-        color = color_css(c)
-        if color:
-            return f"{size}px solid {color}"
-        return None
-
-    def parse_font_weight(style_name):
-        if not style_name:
-            return None
-        m = re.search(r'(\d+)', style_name)
-        return int(m.group(1)) if m else None
-
-    layers = []
-    board_w = 375
-    board_h = 667
-
-    # 支持两种格式：board（平面结构）和 artboard（Figma 新格式，用 frame 子属性）
-    if 'artboard' in sketch_data:
-        artboard = sketch_data['artboard']
-        art_frame = artboard.get('frame') or artboard.get('realFrame') or {}
-        board_w = px(art_frame.get('width', 750))
-        board_h = px(art_frame.get('height', 1334))
-        raw_layers = artboard.get('layers', [])
-
-        def _flatten(layer):
-            if not layer or not isinstance(layer, dict):
-                return
-            if layer.get('visible') is False:
-                return
-            # artboard 格式中尺寸在 frame 子属性里
-            lframe = layer.get('frame') or layer.get('realFrame') or {}
-            w = lframe.get('width', 0) or layer.get('width', 0) or 0
-            h = lframe.get('height', 0) or layer.get('height', 0) or 0
-            if w == 0 and h == 0:
-                for child in reversed(layer.get('layers', [])):
-                    _flatten(child)
-                return
-            ltype = layer.get('type', '')
-            if ltype in ('groupLayer', 'layerSection', 'symbolInstence', 'symbolInstance', 'artboard'):
-                # 检查是否有切图资源（旧 Sketch 格式: images.png_xxxhd/svg; Figma 新格式: image.imageUrl/svgUrl）
-                images = layer.get('images') or {}
-                img_field = layer.get('image') or {}
-                if (images.get('png_xxxhd') or images.get('svg')
-                        or img_field.get('imageUrl') or img_field.get('svgUrl')):
-                    layers.append(layer)
-                else:
-                    for child in reversed(layer.get('layers', [])):
-                        _flatten(child)
-                return
-            layers.append(layer)
-
-        for l in reversed(raw_layers):
-            _flatten(l)
-
-    elif 'board' in sketch_data:
-        board = sketch_data['board']
-        board_w = px(board.get('width', 750))
-        board_h = px(board.get('height', 1334))
-        raw_layers = board.get('layers', [])
-
-        def _flatten(layer):
-            if not layer or not isinstance(layer, dict):
-                return
-            if layer.get('visible') is False:
-                return
-            w = layer.get('width', 0) or 0
-            h = layer.get('height', 0) or 0
-            if w == 0 and h == 0:
-                for child in reversed(layer.get('layers', [])):
-                    _flatten(child)
-                return
-            ltype = layer.get('type', '')
-            if ltype in ('groupLayer', 'layerSection', 'symbolInstence', 'symbolInstance', 'artboard'):
-                # 检查是否有切图资源（旧 Sketch 格式: images.png_xxxhd/svg; Figma 新格式: image.imageUrl/svgUrl）
-                images = layer.get('images') or {}
-                img_field = layer.get('image') or {}
-                if (images.get('png_xxxhd') or images.get('svg')
-                        or img_field.get('imageUrl') or img_field.get('svgUrl')):
-                    layers.append(layer)
-                else:
-                    for child in reversed(layer.get('layers', [])):
-                        _flatten(child)
-                return
-            layers.append(layer)
-
-        for l in reversed(raw_layers):
-            _flatten(l)
-
-    css_rules = []
-    html_parts = []
-    image_url_mapping = {}
-    layer_annotations = []
-
-    for idx, L in enumerate(layers):
-        cls = f"el{idx + 1}"
-        ltype = L.get('type', '')
-        name = L.get('name', '')
-        # 支持两种格式：直接属性（board格式）或 frame 子属性（artboard格式）
-        lframe = L.get('frame') or L.get('realFrame') or {}
-        left = px(lframe.get('left', L.get('left', 0)))
-        top = px(lframe.get('top', L.get('top', 0)))
-        w = px(lframe.get('width', L.get('width', 0)))
-        h = px(lframe.get('height', L.get('height', 0)))
-
-        opacity = get_opacity(L)
-        effects = L.get('layerEffects') or L.get('style') or {}
-
-        annot = {
-            'name': name,
-            'type': ltype,
-            'css': {
-                'position': 'absolute',
-                'left': f'{left}px', 'top': f'{top}px',
-                'width': f'{w}px', 'height': f'{h}px',
-            }
-        }
-
-        props = [
-            "position:absolute",
-            f"left:{left}px", f"top:{top}px",
-            f"width:{w}px", f"height:{h}px",
-        ]
-
-        if opacity < 100:
-            op_css = round(opacity / 100, 2)
-            props.append(f"opacity:{op_css}")
-            annot['css']['opacity'] = str(op_css)
-
-        br = extract_border_radius(L)
-        if br:
-            props.append(f"border-radius:{br}")
-            props.append("overflow:hidden")
-            annot['css']['border-radius'] = br
-
-        shadow = extract_shadow(effects)
-        # artboard格式: effects.shadows 直接有 x/y/blur/color 结构
-        if not shadow and isinstance(effects, dict):
-            shadows_list = effects.get('shadows') or []
-            shadow_parts = []
-            for s in shadows_list:
-                if not s.get('isEnabled', True):
-                    continue
-                sc = s.get('color') or {}
-                if isinstance(sc, dict) and 'value' in sc:
-                    s_color = sc['value']
-                else:
-                    s_color = color_css(sc)
-                if not s_color:
-                    continue
-                sx = px(s.get('x', 0))
-                sy = px(s.get('y', 0))
-                sblur = px(s.get('blur', 0))
-                sspread = px(s.get('spread', 0))
-                inset = "inset " if s.get('inset') else ""
-                spread_str = f" {sspread}px" if sspread else ""
-                shadow_parts.append(f"{inset}{sx}px {sy}px {sblur}px{spread_str} {s_color}")
-            if shadow_parts:
-                shadow = ','.join(shadow_parts)
-        if shadow:
-            annot['css']['box-shadow'] = shadow
-
-        border = extract_border(effects)
-        # artboard格式: effects.borders 直接有 size/color 结构
-        if not border and isinstance(effects, dict):
-            borders_list = effects.get('borders') or []
-            for b in borders_list:
-                if not b.get('isEnabled', True):
-                    continue
-                bsize = px(b.get('size', 1))
-                bc = b.get('color') or {}
-                if isinstance(bc, dict) and 'value' in bc:
-                    b_color = bc['value']
-                else:
-                    b_color = color_css(bc)
-                if b_color:
-                    border = f"{bsize}px solid {b_color}"
-                    break
-        if border:
-            annot['css']['border'] = border
-
-        # 文本层处理：支持两种格式
-        # board格式: textInfo {text, color, size, fontName, fontPostScriptName, ...}
-        # artboard格式: text {value, style: {font, color}}
-        text_content = ""
-        is_slice = False
-        slice_url = ""
-
-        images = L.get('images') or {}
-        img_field = L.get('image') or {}
-        if images.get('png_xxxhd') or images.get('svg'):
-            is_slice = True
-            slice_url = images.get('png_xxxhd') or images.get('svg')
-            local_name = f"{name.replace('/', '_').replace(' ', '_')}.png"
-            local_path = f"./assets/slices/{local_name}"
-            image_url_mapping[local_path] = slice_url
-            annot['slice_url'] = slice_url
-        elif img_field.get('imageUrl') or img_field.get('svgUrl'):
-            # Figma 新格式: image {imageUrl(png), svgUrl(svg)} —— 编组/图标整体作为图片资源透出
-            is_slice = True
-            annot['slice_url'] = img_field.get('svgUrl') or img_field.get('imageUrl')
-            base_name = name.replace('/', '_').replace(' ', '_')
-            if img_field.get('svgUrl'):
-                annot['svg_url'] = img_field['svgUrl']
-                image_url_mapping[f"./assets/slices/{base_name}.svg"] = img_field['svgUrl']
-            if img_field.get('imageUrl'):
-                annot['png_url'] = img_field['imageUrl']
-                image_url_mapping[f"./assets/slices/{base_name}.png"] = img_field['imageUrl']
-            slice_url = annot['slice_url']
-
-        if ltype == 'textLayer' and (L.get('textInfo') or L.get('text')):
-            ti = L.get('textInfo')  # board格式
-            art_text = L.get('text')  # artboard格式
-            if ti:
-                # board格式处理
-                text_content = ti.get('text', '')
-                annot['text'] = text_content
-                props.append('z-index:10')
-                text_color = color_css(ti.get('color'), opacity)
-                if text_color:
-                    props.append(f"color:{text_color}")
-                    annot['css']['color'] = text_color
-                font_size = px(ti.get('size', 0))
-                if font_size:
-                    props.append(f"font-size:{font_size}px")
-                    annot['css']['font-size'] = f'{font_size}px'
-                font_name = ti.get('fontPostScriptName') or ti.get('fontName', '')
-                if font_name:
-                    props.append(
-                        f'font-family:"{font_name}","PingFang SC",'
-                        f'"Microsoft YaHei","Hiragino Sans GB",sans-serif'
-                    )
-                    annot['css']['font-family'] = font_name
-                font_style_name = ti.get('fontStyleName', '')
-                fw = parse_font_weight(font_style_name)
-                if fw:
-                    props.append(f"font-weight:{fw}")
-                    annot['css']['font-weight'] = str(fw)
-                elif font_style_name:
-                    annot['css']['font-weight'] = font_style_name
-                if ti.get('bold') and not fw:
-                    props.append("font-weight:bold")
-                if ti.get('italic'):
-                    props.append("font-style:italic")
-                just = ti.get('justification', 'left')
-                if just != 'left':
-                    props.append(f"text-align:{just}")
-                    annot['css']['text-align'] = just
-                lines = [ln for ln in text_content.split('\r') if ln]
-                line_count = max(len(lines), 1)
-                if line_count > 1 and h > 0 and font_size > 0:
-                    lh = round(h / line_count * 10) / 10
-                    props.append(f"line-height:{lh}px")
-                else:
-                    props.append("line-height:1")
-                props.append("white-space:pre-wrap")
-                props.append("overflow:hidden")
-                props.append("word-break:break-all")
-            elif art_text and isinstance(art_text, dict):
-                # artboard格式处理
-                text_content = art_text.get('value', '')
-                annot['text'] = text_content
-                props.append('z-index:10')
-                art_style = art_text.get('style', {})
-                # 颜色
-                art_color = art_style.get('color') or {}
-                if isinstance(art_color, dict) and 'value' in art_color:
-                    color_val = art_color['value']
-                    props.append(f"color:{color_val}")
-                    annot['css']['color'] = color_val
-                # 字体
-                art_font = art_style.get('font') or {}
-                font_size_val = art_font.get('size', 0)
-                font_size = px(font_size_val)
-                if font_size:
-                    props.append(f"font-size:{font_size}px")
-                    annot['css']['font-size'] = f'{font_size}px'
-                font_ps_name = art_font.get('postScriptName', '')
-                font_name = art_font.get('name', '') or font_ps_name
-                if font_name:
-                    props.append(
-                        f'font-family:"{font_name}","PingFang SC",'
-                        f'"Microsoft YaHei","Hiragino Sans GB",sans-serif'
-                    )
-                    annot['css']['font-family'] = font_name
-                font_weight = art_font.get('fontWeight', 0)
-                if font_weight:
-                    props.append(f"font-weight:{font_weight}")
-                    annot['css']['font-weight'] = str(font_weight)
-                font_type = art_font.get('type', '')
-                fw = parse_font_weight(font_type)
-                if fw and not font_weight:
-                    props.append(f"font-weight:{fw}")
-                    annot['css']['font-weight'] = str(fw)
-                align = art_font.get('align', 'left')
-                if align and align != 'left':
-                    props.append(f"text-align:{align}")
-                    annot['css']['text-align'] = align
-                line_height = art_font.get('lineHeight') or {}
-                lh_px = px(line_height.get('value', 0)) if isinstance(line_height, dict) else 0
-                if lh_px:
-                    props.append(f"line-height:{lh_px}px")
-                else:
-                    props.append("line-height:1")
-                props.append("white-space:pre-wrap")
-                props.append("overflow:hidden")
-                props.append("word-break:break-all")
-        elif is_slice:
-            props.append('z-index:5')
-        else:
-            # board格式: L.fill.color
-            fill = (L.get('fill') or {})
-            fill_color = color_css(fill.get('color'), opacity)
-            # artboard格式: L.style.fills[0].color
-            if not fill_color and isinstance(effects, dict):
-                fills = effects.get('fills') or []
-                for f_item in fills:
-                    if f_item.get('isEnabled', True) and f_item.get('type') == 'color':
-                        fc = f_item.get('color') or {}
-                        if isinstance(fc, dict) and 'value' in fc:
-                            fill_color = fc['value']
-                            break
-                        else:
-                            fill_color = color_css(fc, opacity)
-                            if fill_color:
-                                break
-            if fill_color:
-                annot['css']['background-color'] = fill_color
-
-        css_rules.append(f".{cls}{{{';'.join(props)}}}")
-
-        safe_name = (name or "").replace('"', '&quot;')
-        css_data = '; '.join(f'{k}: {v}' for k, v in annot['css'].items())
-        safe_css = css_data.replace('"', '&quot;')
-        if text_content:
-            safe_text = text_content.replace('<', '&lt;').replace('>', '&gt;').replace('\r', '\n')
-            html_parts.append(
-                f'<div class="{cls}" title="{safe_name}" data-css="{safe_css}">'
-                f'{safe_text}</div>'
-            )
-        elif is_slice:
-            html_parts.append(
-                f'<img class="{cls}" title="{safe_name}" data-css="{safe_css}" '
-                f'src="{slice_url}" referrerpolicy="no-referrer" />'
-            )
-        else:
-            html_parts.append(
-                f'<div class="{cls}" title="{safe_name}" data-css="{safe_css}"></div>'
-            )
-
-        layer_annotations.append(annot)
-
-    html = (
-        f'<!DOCTYPE html><html><head><meta charset="UTF-8">'
-        f'<meta name="referrer" content="no-referrer">'
-        f'<meta name="viewport" content="width=device-width,initial-scale=1.0">'
-        f'<title>Design</title><style>'
-        f'*{{margin:0;padding:0;box-sizing:border-box}}img{{display:block}}'
-        f'.design{{position:relative;width:{board_w}px;height:{board_h}px;'
-        f'overflow:hidden;margin:0 auto'
-        + (f';background:url({design_img_url}) no-repeat;'
-           f'background-size:{board_w}px {board_h}px'
-           if design_img_url else '')
-        + '}}\n'
-        + '\n'.join(css_rules)
-        + '</style></head><body><div class="design">\n'
-        + '\n'.join(html_parts)
-        + '\n</div></body></html>'
-    )
-
-    return html, image_url_mapping, layer_annotations
-
-
-# JS 脚本：注入蓝湖页面，遍历所有图层，点击提取标注面板数据
-LANHU_EXTRACT_JS = r'''
-(async () => {
-  const el = document.querySelector('.layer_interactive');
-  let vm = null; let node = el;
-  while (node) { if (node.__vue__) { vm = node.__vue__; break; } node = node.parentElement; }
-  const layers = vm.g_detail?.layers;
-  const items = document.querySelectorAll('.layers_item');
-  const imgEl = document.querySelector('.big-img');
-  const designImgUrl = imgEl?.src || '';
-  const dw = (layers[0]?.width || 750) / 2;
-  const dh = (layers[0]?.height || 1334) / 2;
-  const px = v => Math.round(v / 2 * 10) / 10;
-
-  const results = [];
-  for (let i = 1; i < layers.length && i < items.length; i++) {
-    const L = layers[i];
-    if (!L.visible || (!L.width && !L.height)) continue;
-    items[i].dispatchEvent(new MouseEvent('mousedown', {bubbles:true, clientX:100, clientY:100}));
-    items[i].dispatchEvent(new MouseEvent('mouseup', {bubbles:true}));
-    items[i].dispatchEvent(new MouseEvent('click', {bubbles:true}));
-    await new Promise(r => setTimeout(r, 50));
-    results.push({
-      name: L.name, type: L.type,
-      left: px(L.left), top: px(L.top), width: px(L.width), height: px(L.height),
-      images: L.images || {},
-      textInfo: L.textInfo || null,
-      code: document.querySelector('.code_box')?.textContent?.substring(0, 1000) || ''
-    });
-  }
-  return JSON.stringify({ designImgUrl, canvasW: dw, canvasH: dh, layers: results });
-})()
-'''
-
-
-def _extract_full_annotations_from_sketch(sketch_data: dict, design_scale: float = 2.0) -> str:
-    """
-    当 store_schema_revise 失败时，从原始 Sketch JSON 中提取完整的标注信息，
-    包括画布信息、图层层级结构（文本/形状/图片）、颜色/字体/尺寸/位置/特效等，
-    生成结构化文本供 AI 还原设计。
-
-    design_scale: 设计稿缩放比（如 iOS @2x 则为 2.0），用于将 px 转换为逻辑点。
-    """
-    import math
-
-    scale = design_scale or 2.0
-
-    def _rgb_str(color: dict) -> str:
-        r = round(color.get('red', color.get('r', 0)))
-        g = round(color.get('green', color.get('g', 0)))
-        b = round(color.get('blue', color.get('b', 0)))
-        return f"rgb({r},{g},{b})"
-
-    def _rgba_str(color: dict, opacity_val: float = 100) -> str:
-        r = round(color.get('red', color.get('r', 0)))
-        g = round(color.get('green', color.get('g', 0)))
-        b = round(color.get('blue', color.get('b', 0)))
-        a = round(opacity_val / 100, 2) if opacity_val < 100 else 1
-        if a < 1:
-            return f"rgba({r},{g},{b},{a})"
-        return f"rgb({r},{g},{b})"
-
-    def _px(val) -> str:
-        """将设计稿 px 转换为逻辑像素字符串"""
-        if val is None:
-            return "0"
-        return str(round(float(val) / scale, 1))
-
-    def _extract_opacity(layer: dict) -> float:
-        bo = layer.get('blendOptions', {})
-        if 'opacity' in bo:
-            op = bo['opacity']
-            if isinstance(op, dict):
-                return op.get('value', 100)
-            return op
-        return 100
-
-    def _extract_fill_color(layer: dict):
-        fill = layer.get('fill', {})
-        if not fill:
-            return None
-        color = fill.get('color')
-        if not color:
-            return None
-        opacity = _extract_opacity(layer)
-        return _rgba_str(color, opacity)
-
-    def _extract_shadow_str(shadow_data: dict):
-        if not shadow_data.get('enabled', True):
-            return None
-        color = shadow_data.get('color', {})
-        opacity = shadow_data.get('opacity', {})
-        op_val = opacity.get('value', 100) if isinstance(opacity, dict) else opacity
-        dx = shadow_data.get('localLightingAngle', {})
-        distance = shadow_data.get('distance', 0)
-        blur = shadow_data.get('blur', 0)
-        spread = shadow_data.get('chokeMatte', 0)
-        angle_raw = shadow_data.get('localLightingAngle', {})
-        angle = angle_raw.get('value', 120) if isinstance(angle_raw, dict) else (angle_raw or 120)
-        rad = math.radians(angle)
-        x_off = round(distance * math.cos(rad), 1)
-        y_off = round(distance * math.sin(rad), 1)
-        color_str = _rgba_str(color, op_val)
-        return f"{color_str} {_px(x_off)}px {_px(y_off)}px {_px(blur)}px {_px(spread)}px"
-
-    def _extract_stroke_str(frame_fx: dict):
-        if not frame_fx.get('enabled', True):
-            return None
-        size = frame_fx.get('size', 0)
-        color = frame_fx.get('color', {})
-        opacity = frame_fx.get('opacity', {})
-        op_val = opacity.get('value', 100) if isinstance(opacity, dict) else opacity
-        style = frame_fx.get('style', 'outsetFrame')
-        pos_map = {'outsetFrame': 'outside', 'insetFrame': 'inside', 'centeredFrame': 'center'}
-        pos = pos_map.get(style, 'outside')
-        color_str = _rgba_str(color, op_val)
-        return f"{_px(size)}px {pos} {color_str}"
-
-    lines = []
-    board = sketch_data.get('board', {})
-    device = sketch_data.get('device', '')
-    psd_name = sketch_data.get('psdName', '')
-    board_w = board.get('width', 0)
-    board_h = board.get('height', 0)
-    board_fill = board.get('fill', {})
-    board_color = _rgb_str(board_fill.get('color', {})) if board_fill.get('color') else '#FFFFFF'
-
-    lines.append("=" * 60)
-    lines.append("设计标注信息（从原始 Sketch/PSD 数据提取）")
-    lines.append("=" * 60)
-    lines.append(f"设计稿名称: {psd_name}")
-    lines.append(f"设备: {device}  |  缩放: @{int(scale)}x")
-    lines.append(f"画布尺寸: {_px(board_w)}x{_px(board_h)} (逻辑像素)")
-    lines.append(f"画布背景色: {board_color}")
-    lines.append("")
-    lines.append("以下所有尺寸/坐标均为逻辑像素（已除以 @{0}x）".format(int(scale)))
-    lines.append("-" * 60)
-
-    text_layers = []
-    shape_layers = []
-    image_layers = []
-    group_structure = []
-
-    def _walk_layer(layer: dict, depth: int = 0, parent_path: str = ""):
-        if not layer or not isinstance(layer, dict):
-            return
-        vis = layer.get('visible', True)
-        if vis is False:
-            return
-
-        name = layer.get('name', '?')
-        ltype = layer.get('type', '?')
-        w = layer.get('width', 0) or 0
-        h = layer.get('height', 0) or 0
-        left = layer.get('left', 0) or 0
-        top = layer.get('top', 0) or 0
-        current_path = f"{parent_path}/{name}" if parent_path else name
-
-        if w == 0 and h == 0:
-            for child in layer.get('layers', []):
-                _walk_layer(child, depth, current_path)
-            return
-
-        opacity = _extract_opacity(layer)
-
-        if ltype == 'textLayer':
-            ti = layer.get('textInfo', {})
-            text = ti.get('text', '')
-            color = ti.get('color', {})
-            size = ti.get('size', 0)
-            font = ti.get('fontPostScriptName', '')
-            bold = ti.get('bold', False)
-            italic = ti.get('italic', False)
-            justify = ti.get('justification', 'left')
-            leading = ti.get('leading')
-            tracking = ti.get('tracking')
-            le = layer.get('layerEffects', {})
-
-            entry = {
-                'name': name,
-                'path': current_path,
-                'text': text,
-                'x': _px(left), 'y': _px(top), 'w': _px(w), 'h': _px(h),
-                'color': _rgba_str(color, opacity) if color else None,
-                'fontSize': _px(size) if size else None,
-                'font': font,
-                'bold': bold,
-                'italic': italic,
-                'justify': justify,
-                'leading': _px(leading) if leading else None,
-                'tracking': tracking,
-                'stroke': None,
-                'shadow': None,
-            }
-            if 'frameFX' in le:
-                entry['stroke'] = _extract_stroke_str(le['frameFX'])
-            if 'dropShadow' in le:
-                entry['shadow'] = _extract_shadow_str(le['dropShadow'])
-            text_layers.append(entry)
-
-        elif ltype == 'shapeLayer':
-            fill_color = _extract_fill_color(layer)
-            le = layer.get('layerEffects', {})
-
-            entry = {
-                'name': name,
-                'path': current_path,
-                'x': _px(left), 'y': _px(top), 'w': _px(w), 'h': _px(h),
-                'fill': fill_color,
-                'opacity': opacity if opacity < 100 else None,
-                'stroke': None,
-                'shadows': [],
-                'innerShadows': [],
-                'effects': [],
-            }
-
-            if 'frameFX' in le:
-                entry['stroke'] = _extract_stroke_str(le['frameFX'])
-
-            for shadow_key in ['dropShadow', 'dropShadowMulti']:
-                if shadow_key in le:
-                    sd = le[shadow_key]
-                    if isinstance(sd, list):
-                        for s in sd:
-                            ss = _extract_shadow_str(s)
-                            if ss:
-                                entry['shadows'].append(ss)
-                    elif isinstance(sd, dict):
-                        ss = _extract_shadow_str(sd)
-                        if ss:
-                            entry['shadows'].append(ss)
-
-            for shadow_key in ['innerShadow', 'innerShadowMulti']:
-                if shadow_key in le:
-                    sd = le[shadow_key]
-                    if isinstance(sd, list):
-                        for s in sd:
-                            ss = _extract_shadow_str(s)
-                            if ss:
-                                entry['innerShadows'].append(f"inset {ss}")
-                    elif isinstance(sd, dict):
-                        ss = _extract_shadow_str(sd)
-                        if ss:
-                            entry['innerShadows'].append(f"inset {ss}")
-
-            for fx_name in ['bevelEmboss', 'outerGlow', 'innerGlow', 'patternFill']:
-                if fx_name in le and le[fx_name].get('enabled', True):
-                    entry['effects'].append(fx_name)
-
-            shape_layers.append(entry)
-
-        elif ltype == 'layer':
-            if w > 10 and h > 10:
-                image_layers.append({
-                    'name': name,
-                    'path': current_path,
-                    'x': _px(left), 'y': _px(top), 'w': _px(w), 'h': _px(h),
-                    'opacity': opacity if opacity < 100 else None,
-                })
-
-        elif ltype == 'layerSection':
-            group_structure.append({
-                'name': name,
-                'depth': depth,
-                'x': _px(left), 'y': _px(top), 'w': _px(w), 'h': _px(h),
-            })
-
-        for child in layer.get('layers', []):
-            _walk_layer(child, depth + 1, current_path)
-
-    board_layers = board.get('layers', [])
-    for layer in board_layers:
-        _walk_layer(layer)
-
-    if group_structure:
-        lines.append("")
-        lines.append("📂 图层组结构 (布局参考):")
-        for g in group_structure:
-            indent = "  " * g['depth']
-            lines.append(f"  {indent}[组] \"{g['name']}\" @({g['x']},{g['y']}) {g['w']}x{g['h']}")
-
-    if text_layers:
-        lines.append("")
-        lines.append("📝 文本图层:")
-        for t in text_layers:
-            lines.append(f"  \"{t['text']}\"")
-            lines.append(f"    位置: ({t['x']},{t['y']}) {t['w']}x{t['h']}")
-            parts = []
-            if t['fontSize']:
-                parts.append(f"font-size: {t['fontSize']}px")
-            if t['font']:
-                parts.append(f"font-family: {t['font']}")
-            if t['bold']:
-                parts.append("font-weight: bold")
-            if t['italic']:
-                parts.append("font-style: italic")
-            if t['color']:
-                parts.append(f"color: {t['color']}")
-            if t['justify'] and t['justify'] != 'left':
-                parts.append(f"text-align: {t['justify']}")
-            if t['leading']:
-                parts.append(f"line-height: {t['leading']}px")
-            if t['tracking']:
-                parts.append(f"letter-spacing: {t['tracking']}")
-            if parts:
-                lines.append(f"    样式: {'; '.join(parts)}")
-            if t['stroke']:
-                lines.append(f"    描边: {t['stroke']}")
-            if t['shadow']:
-                lines.append(f"    阴影: {t['shadow']}")
-
-    if shape_layers:
-        lines.append("")
-        lines.append("🔷 形状图层:")
-        for s in shape_layers:
-            lines.append(f"  \"{s['name']}\" ({s['path']})")
-            lines.append(f"    位置: ({s['x']},{s['y']}) {s['w']}x{s['h']}")
-            parts = []
-            if s['fill']:
-                parts.append(f"fill: {s['fill']}")
-            if s['opacity'] is not None:
-                parts.append(f"opacity: {s['opacity']}%")
-            if s['stroke']:
-                parts.append(f"border: {s['stroke']}")
-            if parts:
-                lines.append(f"    样式: {'; '.join(parts)}")
-            all_shadows = s['shadows'] + s['innerShadows']
-            if all_shadows:
-                lines.append(f"    box-shadow: {', '.join(all_shadows)}")
-            if s['effects']:
-                lines.append(f"    特效: {', '.join(s['effects'])}")
-
-    if image_layers:
-        lines.append("")
-        lines.append("🖼️ 图片/位图图层 (需切图资源):")
-        for img in image_layers:
-            lines.append(f"  \"{img['name']}\" ({img['path']})")
-            lines.append(f"    位置: ({img['x']},{img['y']}) {img['w']}x{img['h']}")
-            if img['opacity'] is not None:
-                lines.append(f"    opacity: {img['opacity']}%")
-
-    color_set = set()
-    font_set = set()
-    for t in text_layers:
-        if t['color']:
-            color_set.add(t['color'])
-        if t['font']:
-            font_set.add(t['font'])
-        if t['fontSize']:
-            font_set.add(f"{t['fontSize']}px")
-    for s in shape_layers:
-        if s['fill']:
-            color_set.add(s['fill'])
-
-    if color_set or font_set:
-        lines.append("")
-        lines.append("🎨 设计汇总:")
-        if color_set:
-            lines.append(f"  使用颜色: {', '.join(sorted(color_set))}")
-        if font_set:
-            lines.append(f"  字体/字号: {', '.join(sorted(font_set))}")
-
-    lines.append("")
-    lines.append("=" * 60)
-
-    return '\n'.join(lines)
-
-
 def _minify_css(css: str) -> str:
     """压缩 CSS：去掉注释、折叠空白。"""
     css = re.sub(r'/\*[\s\S]*?\*/', '', css)
@@ -1741,7 +445,8 @@ def _localize_image_urls(html_code: str, design_name: str) -> tuple[str, dict]:
         cls_m = re.search(r'class=["\']([^"\']+)["\']', tag) or re.search(r'class=([^"\'>\s]+)', tag)
         hint = cls_m.group(1).split()[0] if cls_m else url_to_css_class.get(url)
         local_path = _get_localpath(url, hint)
-        return tag[:src_m.start(1) - tag_match.start()] + local_path + tag[src_m.end(1) - tag_match.start():]
+        # src_m was matched against tag, so its offsets are already tag-relative.
+        return tag[:src_m.start(1)] + local_path + tag[src_m.end(1):]
 
     # 先整体替换 <img> 标签（以保留 class 上下文）
     result = re.sub(r'<img\b[^>]*>', _replace_img_tag, html_code)
@@ -3588,7 +2293,7 @@ class LanhuExtractor:
 
 # Photoshop：蓝湖在根节点 type=ps，导出资源登记在 assets[]。
         # 老数据可能标 isSlice，新数据可能只标 isAsset；
-        # 实际 PNG/SVG 地址在对应 id 的图层 images.png_xxxhd / images.svg（与 convert_sketch_to_html 一致）
+        # 实际 PNG/SVG 地址在对应 id 的图层 images.png_xxxhd / images.svg
         if str(sketch_data.get('type') or '').lower() == 'ps':
             by_id: dict = {}
 
@@ -3768,13 +2473,15 @@ class LanhuExtractor:
         if team_id:
             params["team_id"] = team_id
         response = await self.client.get(url, params=params)
+        response.raise_for_status()
         data = response.json()
         if data['code'] != '00000':
             raise Exception(f"Failed to get design: {data['msg']}")
         result = data['result']
         latest_version = result['versions'][0]
-        json_url = latest_version['json_url']
+        json_url = latest_version.get('d2c_url') or latest_version['json_url']
         json_response = await self.client.get(json_url)
+        json_response.raise_for_status()
         return json_response.json()
 
     async def close(self):
@@ -5697,6 +4404,78 @@ async def lanhu_get_designs(
         await extractor.close()
 
 
+def _convert_figma_with_assets(raw_json: dict) -> dict:
+    """Fetch only selected merge inputs, without forwarding account headers."""
+    from lanhu_codegen.figma_schema import figma_to_dds_schema
+
+    cache = {}
+    with httpx.Client(timeout=30, follow_redirects=True) as image_client:
+        def load_asset(url: str) -> bytes:
+            if url not in cache:
+                response = image_client.get(url)
+                response.raise_for_status()
+                cache[url] = response.content
+            return cache[url]
+
+        return figma_to_dds_schema(raw_json, asset_loader=load_asset)
+
+
+def _schema_conversion_warnings(schema: dict) -> list:
+    warnings = []
+    stack = [schema]
+    while stack:
+        node = stack.pop()
+        warnings.extend(node.get('conversionWarnings', []))
+        warnings.extend(node.get('layoutWarnings', []))
+        stack.extend(reversed(node.get('children', [])))
+    return warnings
+
+
+async def _generate_design_result(extractor, design: dict, params: dict, output_dir: Path) -> dict:
+    """Resolve a source schema, then export through the single official renderer."""
+    result = {'success': False, 'design_name': design['name'], 'design_id': design['id']}
+    raw_json = None
+    try:
+        schema = await extractor.get_design_schema_json(design['id'], params.get('team_id'), params['project_id'])
+        source = 'dds'
+    except Exception as dds_error:
+        result['dds_error'] = str(dds_error)
+        try:
+            raw_json = await extractor.get_sketch_json(design['id'], params.get('team_id'), params['project_id'])
+            schema = await asyncio.to_thread(_convert_figma_with_assets, raw_json)
+            source = 'figma'
+        except Exception as fallback_error:
+            result['error'] = f"DDS: {dds_error}; Figma schema: {fallback_error}"
+            return result
+    try:
+        files = await asyncio.to_thread(generate_design_files, schema)
+        export_dir = output_dir / (design['id'] + '_' + source)
+        export_dir.mkdir(parents=True, exist_ok=True)
+        for filename, content in files.items():
+            (export_dir / filename).write_text(content, encoding='utf-8')
+        (export_dir / 'schema.json').write_text(json.dumps(schema, ensure_ascii=False, indent=2), encoding='utf-8')
+        html, mapping = _localize_image_urls(minify_html(inline_design_files(files)), design['name'])
+        html_path = output_dir / (design['name'].replace('/', '_') + '.html')
+        html_path.write_text(html, encoding='utf-8')
+        result.update(success=True, source=source, html_path=str(html_path),
+                      export_html_path=str(export_dir / 'index.html'), html_code=html, image_url_mapping=mapping)
+        if source == 'figma':
+            result['conversion_warnings'] = _schema_conversion_warnings(schema)
+    except Exception as error:
+        result['error'] = f"{source} schema HTML generation: {error}"
+        return result
+    # Tokens are supplementary; their failure cannot invalidate an official export.
+    try:
+        if raw_json is None:
+            raw_json = await extractor.get_sketch_json(design['id'], params.get('team_id'), params['project_id'])
+        tokens = _extract_design_tokens(raw_json)
+        if tokens:
+            result['design_tokens'] = tokens
+    except Exception as error:
+        result['tokens_error'] = str(error)
+    return result
+
+
 @mcp.tool()
 async def lanhu_get_ai_analyze_design_result(
         url: Annotated[str, "Lanhu URL WITHOUT docId (indicates UI design project). Example: https://lanhuapp.com/web/#/item/project/stage?tid=xxx&pid=xxx. Required param: pid. tid is optional. Supports detailDetach format: ?pid=xxx&image_id=xxx"],
@@ -5724,9 +4503,10 @@ async def lanhu_get_ai_analyze_design_result(
             2. Design Tokens  — supplementary reference for gradients/borders/shadows
             3. Design Image   — visual verification ONLY, never override CSS values
 
-        The returned HTML+CSS is the DESIGN SPECIFICATION generated from design schema.
-        Every CSS property value (color, size, spacing, font, gradient, border-radius,
-        etc.) is extracted from the original design data and MUST be used as-is.
+        The returned HTML+CSS is generated from the resolved design schema.
+        DDS sources use the official schema. Figma fallback sources infer layout
+        from available exports and report known conversion differences. Check
+        conversion notes before treating a fallback as a complete source specification.
 
         RULE 1 - HTML+CSS IS DESIGN SPEC, COPY CSS VALUES DIRECTLY:
             The CSS values are the single source of truth for all design parameters.
@@ -5938,83 +4718,9 @@ async def lanhu_get_ai_analyze_design_result(
                     'error': str(e)
                 })
             
-            # ===== 2. 获取Schema并生成HTML =====
-            try:
-                # 获取设计图Schema JSON
-                schema_json = await extractor.get_design_schema_json(
-                    design['id'],
-                    params.get('team_id'),
-                    params['project_id']
-                )
-                
-                # 转换为 HTML 并压缩（与 TS 端一致，减少 token）
-                html_code = minify_html(convert_lanhu_to_html(schema_json))
-                
-                # 远程图片 URL 替换为本地路径，生成下载映射表
-                html_code, image_url_mapping = _localize_image_urls(html_code, design['name'])
-                
-                # 保存HTML文件（文件名中的 / 替换为 _）
-                html_filename = f"{design['name'].replace('/', '_')}.html"
-                html_filepath = output_dir / html_filename
-                
-                with open(html_filepath, 'w', encoding='utf-8') as f:
-                    f.write(html_code)
-                
-                html_results.append({
-                    'success': True,
-                    'design_name': design['name'],
-                    'html_path': str(html_filepath),
-                    'html_code': html_code,
-                    'image_url_mapping': image_url_mapping,
-                })
-            except Exception as e:
-                html_results.append({
-                    'success': False,
-                    'design_name': design['name'],
-                    'error': str(e)
-                })
-
-            # ===== 3. 获取 Sketch JSON 并提取 Design Tokens / Fallback HTML =====
-            try:
-                sketch_json = await extractor.get_sketch_json(
-                    design['id'],
-                    params.get('team_id'),
-                    params['project_id']
-                )
-                design_tokens = _extract_design_tokens(sketch_json)
-
-                html_succeeded = any(
-                    hr.get('design_name') == design['name'] and hr.get('success')
-                    for hr in html_results
-                )
-
-                if html_succeeded and design_tokens:
-                    for hr in html_results:
-                        if hr.get('design_name') == design['name'] and hr.get('success'):
-                            hr['design_tokens'] = design_tokens
-                            break
-                elif not html_succeeded:
-                    _design_scale = _get_sketch_design_scale(sketch_json)
-
-                    _design_img_url = design['url'].split('?')[0]
-                    fallback_html, fallback_img_mapping, fallback_layer_annots = convert_sketch_to_html(
-                        sketch_json, _design_scale, _design_img_url
-                    )
-                    fallback_img_mapping['./assets/designs/design.png'] = _design_img_url
-                    fallback_html = minify_html(fallback_html)
-                    fallback_annotations = _extract_full_annotations_from_sketch(sketch_json, _design_scale)
-
-                    for hr in html_results:
-                        if hr.get('design_name') == design['name'] and not hr.get('success'):
-                            hr['sketch_html'] = fallback_html
-                            hr['sketch_annotations'] = fallback_annotations
-                            hr['image_url_mapping'] = fallback_img_mapping
-                            hr['layer_css_annotations'] = fallback_layer_annots
-                            if design_tokens:
-                                hr['design_tokens'] = design_tokens
-                            break
-            except Exception:
-                pass
+            # Both sources use the same official DDS HTML generator.
+            html_result = await _generate_design_result(extractor, design, params, output_dir)
+            html_results.append(html_result)
 
         # Build return content
         content = []
@@ -6022,14 +4728,14 @@ async def lanhu_get_ai_analyze_design_result(
         # Add summary text (包含图片和HTML信息)
         html_success_count = len([r for r in html_results if r['success']])
         html_total_count = len(html_results)
-        sketch_fallback_count = len([r for r in html_results if not r['success'] and r.get('sketch_html')])
+        figma_fallback_count = sum(r.get('source') == 'figma' for r in html_results)
 
         summary_text = f"📊 Design Analysis Results\n"
         summary_text += f"📁 Project: {designs_data['project_name']}\n"
         summary_text += f"✓ {len([r for r in image_results if r['success']])}/{len(image_results)} images downloaded\n"
         summary_text += f"✓ {html_success_count}/{html_total_count} HTML codes generated\n"
-        if sketch_fallback_count > 0:
-            summary_text += f"✓ {sketch_fallback_count} design(s) using Sketch annotation fallback (标注模式)\n"
+        if figma_fallback_count > 0:
+            summary_text += f"✓ {figma_fallback_count} design(s) using Figma JSON → compatible DDS schema → official HTML generator\n"
         summary_text += "\n"
 
         # Show design list with both image and HTML info（每条加显式标题便于多图时对应）
@@ -6118,7 +4824,6 @@ async def lanhu_get_ai_analyze_design_result(
         
         success_image_results = [r for r in image_results if r['success']]
         success_html_results = {r['design_name']: r for r in html_results if r['success']}
-        failed_html_by_name = {r['design_name']: r for r in html_results if not r['success']}
         
         for idx, img_r in enumerate(success_image_results, 1):
             summary_text += f"\n--- 设计图 {idx}：{img_r['design_name']} ---\n"
@@ -6127,6 +4832,14 @@ async def lanhu_get_ai_analyze_design_result(
 
             html_r = success_html_results.get(img_r['design_name'])
             if html_r:
+                summary_text += f"   HTML/CSS 原始导出: {html_r['export_html_path']}\n"
+                if html_r['source'] == 'figma':
+                    summary_text += "   来源: Figma JSON 推导的 DDS schema；使用行列重组和 DDS 切图合成，再交给官方生成器。布局规则由配对样例重建，尚未证明覆盖全部设计稿。\n"
+                    summary_text += f"   DDS 读取失败原因: {html_r['dds_error']}\n"
+                    for warning in html_r.get('conversion_warnings', []):
+                        summary_text += f"   转换说明: {warning.get('layerId', warning.get('layerIds', ''))}: {warning.get('reason', '')}\n"
+                else:
+                    summary_text += "   来源: 蓝湖 DDS schema，使用固定版本官方生成器。\n"
                 summary_text += f"   📄 完整代码（图片已替换为本地路径）:\n"
                 summary_text += f"   ```html\n"
                 summary_text += html_r['html_code']
@@ -6149,73 +4862,11 @@ async def lanhu_get_ai_analyze_design_result(
                     summary_text += f"   以下参数来自原始设计数据，如 HTML+CSS 与此处冲突，以此处为准。\n\n"
                     summary_text += html_r['design_tokens']
                     summary_text += f"\n   --- End Design Tokens ---\n"
-            else:
-                failed_r = failed_html_by_name.get(img_r['design_name'])
-                if failed_r and (failed_r.get('sketch_html') or failed_r.get('sketch_annotations')):
-                    summary_text += f"\n   ⚠️ DDS Schema 不可用（{failed_r.get('error', '未知')}），"
-                    summary_text += f"已使用「设计原图底图 + 真实文字 + CSS 标注」方案生成 HTML。\n"
-                    summary_text += f"   渲染策略：\n"
-                    summary_text += f"   - 设计原图作为 .design 容器的 background-image（一张图覆盖所有视觉效果）\n"
-                    summary_text += f"   - 文字图层：渲染真实文本（可选中/可编辑）+ font/color/size 属性\n"
-                    summary_text += f"   - 切图组件：<img> 标签 + 切图 URL\n"
-                    summary_text += f"   - 每个元素的 data-css 属性包含精确 CSS 标注值（颜色/圆角/阴影/字体等），供代码生成使用\n\n"
-
-                    if failed_r.get('sketch_html'):
-                        summary_text += f"   📄 HTML+CSS 代码:\n"
-                        summary_text += f"   ```html\n"
-                        summary_text += failed_r['sketch_html']
-                        summary_text += f"\n   ```\n"
-
-                    fb_mapping = failed_r.get('image_url_mapping', {})
-                    if fb_mapping:
-                        summary_text += f"\n   📥 资源下载映射（共 {len(fb_mapping)} 个，请全部下载到项目本地后替换 HTML 中的 URL）:\n"
-                        summary_text += f"   ⚠️ 下载时必须带 Referer: https://lanhuapp.com/ 请求头\n"
-                        for local_path, remote_url in fb_mapping.items():
-                            summary_text += f"     {local_path} ← {remote_url}\n"
-                        summary_text += f"\n"
-
-                    summary_text += f"\n   🎯 使用指南:\n"
-                    summary_text += f"     1. 先下载上方所有资源到本地对应路径，然后替换 HTML 中的远程 URL 为本地路径\n"
-                    summary_text += f"     2. 其中 ./assets/designs/design.png 是设计底图，HTML 的 .design 容器用它做 background-image\n"
-                    summary_text += f"     3. 每个元素的 data-css 属性包含精确 CSS 标注值，请直接复用到代码中\n"
-                    summary_text += f"     4. 文字图层是真实文本（可选中/修改），切图是 <img> 标签\n"
-                    summary_text += f"     5. 调用 lanhu_get_design_slices 可获取更多细粒度切图资源\n\n"
-
-                    layer_annots = failed_r.get('layer_css_annotations') or []
-                    if layer_annots:
-                        summary_text += f"\n   📐 图层精确 CSS 标注（共 {len(layer_annots)} 个图层）:\n"
-                        for la in layer_annots:
-                            la_name = la.get('name', '')
-                            la_type = la.get('type', '')
-                            la_css = la.get('css', {})
-                            css_str = '; '.join(f'{k}: {v}' for k, v in la_css.items())
-                            summary_text += f"     [{la_type}] {la_name}: {css_str}"
-                            if la.get('text'):
-                                summary_text += f" | text=\"{la['text'][:50]}\""
-                            if la.get('slice_url'):
-                                summary_text += f" | slice={la['slice_url']}"
-                            if la.get('svg_url'):
-                                summary_text += f" | svg={la['svg_url']}"
-                            if la.get('png_url'):
-                                summary_text += f" | png={la['png_url']}"
-                            summary_text += "\n"
-                        summary_text += "\n"
-
-                    if failed_r.get('sketch_annotations'):
-                        summary_text += f"   --- 设计标注详情（参考补充） ---\n"
-                        summary_text += failed_r['sketch_annotations']
-                        summary_text += f"\n   --- End 设计标注 ---\n"
-
-                    if failed_r.get('design_tokens'):
-                        summary_text += f"\n   --- Design Tokens (高风险元素补充) ---\n"
-                        summary_text += failed_r['design_tokens']
-                        summary_text += f"\n   --- End Design Tokens ---\n"
-
         # Show failed items
         failed_image_results = [r for r in image_results if not r['success']]
         failed_html_results = [
             r for r in html_results
-            if not r['success'] and not r.get('sketch_html') and not r.get('sketch_annotations')
+            if not r['success']
         ]
         
         if failed_image_results:

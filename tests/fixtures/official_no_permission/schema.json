@@ -1,0 +1,1703 @@
+{
+  "style": {
+    "backgroundColor": "rgba(40,40,40,1.000000)",
+    "zIndex": 1,
+    "position": "relative",
+    "left": 0,
+    "top": 0,
+    "width": 1640,
+    "height": 2298,
+    "overflow": "hidden"
+  },
+  "rowDims": {
+    "left": 0,
+    "top": 0,
+    "width": 1640,
+    "height": 2298
+  },
+  "eleName": "col__1111_2728",
+  "id": "col__1111_2728",
+  "layerId": "fd9af602-3b09-7036-c588-97ebda7040a5",
+  "type": "lanhupage",
+  "data": {
+    "value": ""
+  },
+  "uiType": "",
+  "uiTypeProb": {},
+  "designType": "mobile",
+  "isddsAdaptive": "",
+  "alignJustify": {},
+  "componentName": "lanhupage",
+  "props": {
+    "className": "page",
+    "style": {
+      "backgroundColor": "rgba(40,40,40,1.000000)",
+      "position": "relative",
+      "width": 1640,
+      "height": 2298,
+      "overflow": "hidden",
+      "display": "flex",
+      "flexDirection": "column"
+    }
+  },
+  "children": [
+    {
+      "style": {
+        "backgroundColor": "rgba(255,255,255,0.100000)",
+        "borderRadius": "32px 32px 32px 32px",
+        "zIndex": 2,
+        "position": "static",
+        "left": 100,
+        "top": 100,
+        "width": 1440,
+        "height": 104,
+        "marginLeft": 100,
+        "marginTop": 100,
+        "display": "flex",
+        "flexDirection": "column"
+      },
+      "rowDims": {
+        "left": 100,
+        "top": 100,
+        "width": 1440,
+        "height": 104
+      },
+      "eleName": "Block__99_45554",
+      "id": "Block__99_45554",
+      "layerId": "253:37472",
+      "type": "lanhublock",
+      "data": {
+        "value": ""
+      },
+      "uiType": "",
+      "uiTypeProb": {},
+      "alignJustify": {},
+      "componentName": "lanhublock",
+      "children": [
+        {
+          "style": {
+            "zIndex": 3,
+            "position": "static",
+            "left": 132,
+            "top": 132,
+            "width": 128,
+            "height": 40,
+            "overflowWrap": "break-word",
+            "color": "rgba(255,255,255,1.000000)",
+            "fontSize": 32,
+            "fontFamily": "PingFang SC-Medium",
+            "fontWeight": "500",
+            "textAlign": "left",
+            "whiteSpace": "nowrap",
+            "lineHeight": 40,
+            "marginTop": 32,
+            "marginLeft": 32
+          },
+          "rowDims": {
+            "left": 132,
+            "top": 132,
+            "width": 128,
+            "height": 40
+          },
+          "eleName": "Text__222222_54485",
+          "id": "Text__222222_54485",
+          "layerId": "I253:37472;49:22461",
+          "type": "lanhutext",
+          "data": {
+            "value": "暂无权限"
+          },
+          "uiType": "",
+          "uiTypeProb": {},
+          "componentName": "lanhutext",
+          "children": [],
+          "props": {
+            "className": "text_1",
+            "text": "暂无权限",
+            "lines": 1,
+            "style": {
+              "width": 128,
+              "height": 40,
+              "overflowWrap": "break-word",
+              "color": "rgba(255,255,255,1.000000)",
+              "fontSize": 32,
+              "fontFamily": "PingFang SC-Medium",
+              "fontWeight": "500",
+              "textAlign": "left",
+              "whiteSpace": "nowrap",
+              "lineHeight": 40,
+              "margin": "32px 0 0 32px"
+            }
+          }
+        }
+      ],
+      "props": {
+        "className": "text-wrapper_1",
+        "style": {
+          "backgroundColor": "rgba(255,255,255,0.100000)",
+          "borderRadius": "32px",
+          "height": 104,
+          "display": "flex",
+          "flexDirection": "column",
+          "width": 1440,
+          "margin": "100px 0 0 100px"
+        }
+      }
+    },
+    {
+      "style": {
+        "backgroundColor": "rgba(250,250,250,1.000000)",
+        "borderRadius": "0px 0px 0px 0px",
+        "zIndex": 4,
+        "position": "static",
+        "left": 100,
+        "top": 256,
+        "width": 1440,
+        "height": 800,
+        "marginLeft": 100,
+        "marginTop": 52,
+        "marginBottom": 1242
+      },
+      "rowDims": {
+        "left": 100,
+        "top": 256,
+        "width": 1440,
+        "height": 800
+      },
+      "eleName": "col__1111_8572",
+      "id": "col__1111_8572",
+      "layerId": "253:37562",
+      "type": "lanhublock",
+      "data": {
+        "value": ""
+      },
+      "uiType": "",
+      "uiTypeProb": {},
+      "alignJustify": {
+        "justifyContent": "space-between"
+      },
+      "componentName": "lanhublock",
+      "children": [
+        {
+          "style": {
+            "backgroundColor": "rgba(255,255,255,1.000000)",
+            "borderRadius": "0px 0px 0px 0px",
+            "zIndex": 5,
+            "position": "static",
+            "left": 100,
+            "top": 256,
+            "width": 1440,
+            "height": 64,
+            "borderWidth": 1,
+            "border": "1px solid rgba(245,245,245,1)",
+            "marginTop": 0,
+            "marginLeft": 0
+          },
+          "rowDims": {
+            "left": 100,
+            "top": 256,
+            "width": 1440,
+            "height": 64
+          },
+          "eleName": "row__66_38593",
+          "id": "row__66_38593",
+          "layerId": "253:37563",
+          "type": "lanhublock",
+          "data": {
+            "value": ""
+          },
+          "uiType": "",
+          "uiTypeProb": {},
+          "alignJustify": {
+            "justifyContent": "flex-center"
+          },
+          "componentName": "lanhublock",
+          "children": [
+            {
+              "style": {
+                "zIndex": 8,
+                "position": "static",
+                "left": 124,
+                "top": 273,
+                "width": 30,
+                "height": 30,
+                "marginTop": 17,
+                "marginLeft": 24
+              },
+              "rowDims": {
+                "left": 124,
+                "top": 273,
+                "width": 30,
+                "height": 30
+              },
+              "eleName": "Image_GICloudGraphics_59796",
+              "id": "Image_GICloudGraphics_59796",
+              "layerId": "253:37566",
+              "type": "lanhuimage",
+              "data": {
+                "value": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNGd5d94cb87547a71400b9fd16ffd3d8da.png"
+              },
+              "uiType": "",
+              "uiTypeProb": {},
+              "componentName": "lanhuimage",
+              "children": [],
+              "props": {
+                "className": "label_1",
+                "src": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNGd5d94cb87547a71400b9fd16ffd3d8da.png",
+                "style": {
+                  "width": 30,
+                  "height": 30,
+                  "margin": "17px 0 0 24px"
+                }
+              }
+            },
+            {
+              "style": {
+                "zIndex": 10,
+                "position": "static",
+                "left": 157,
+                "top": 280,
+                "width": 22,
+                "height": 17,
+                "marginTop": 24,
+                "marginLeft": 3
+              },
+              "rowDims": {
+                "left": 157,
+                "top": 280,
+                "width": 22,
+                "height": 17
+              },
+              "eleName": "Image_GIAD_18314",
+              "id": "Image_GIAD_18314",
+              "layerId": "253:37570",
+              "type": "lanhuimage",
+              "data": {
+                "value": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG089d8e3f5110809af6483eff3f3b9b63.png"
+              },
+              "uiType": "",
+              "uiTypeProb": {},
+              "componentName": "lanhuimage",
+              "children": [],
+              "props": {
+                "className": "image_1",
+                "src": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG089d8e3f5110809af6483eff3f3b9b63.png",
+                "style": {
+                  "width": 22,
+                  "height": 17,
+                  "margin": "24px 0 0 3px"
+                }
+              }
+            },
+            {
+              "style": {
+                "zIndex": 11,
+                "position": "static",
+                "left": 184,
+                "top": 280,
+                "width": 105,
+                "height": 17,
+                "marginTop": 24,
+                "marginLeft": 5
+              },
+              "rowDims": {
+                "left": 184,
+                "top": 280,
+                "width": 105,
+                "height": 17
+              },
+              "eleName": "Image_Mediation_57273",
+              "id": "Image_Mediation_57273",
+              "layerId": "253:37573",
+              "type": "lanhuimage",
+              "data": {
+                "value": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG5abc4ef41d30d9d1d266bdee0882339e.png"
+              },
+              "uiType": "",
+              "uiTypeProb": {},
+              "componentName": "lanhuimage",
+              "children": [],
+              "props": {
+                "className": "image_2",
+                "src": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG5abc4ef41d30d9d1d266bdee0882339e.png",
+                "style": {
+                  "width": 105,
+                  "height": 17,
+                  "margin": "24px 0 0 5px"
+                }
+              }
+            },
+            {
+              "style": {
+                "zIndex": 14,
+                "position": "static",
+                "left": 1280,
+                "top": 280,
+                "width": 52,
+                "height": 16,
+                "marginTop": 24,
+                "marginLeft": 991
+              },
+              "rowDims": {
+                "left": 1280,
+                "top": 280,
+                "width": 52,
+                "height": 16
+              },
+              "eleName": "Image_mergeImage_65635",
+              "id": "Image_mergeImage_65635",
+              "layerId": "253:37596",
+              "type": "lanhuimage",
+              "data": {
+                "value": "https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/24990592d7ea40b598ddc09f1930670e_mergeImage.png"
+              },
+              "uiType": "",
+              "uiTypeProb": {},
+              "componentName": "lanhuimage",
+              "children": [],
+              "props": {
+                "className": "image_3",
+                "src": "https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/24990592d7ea40b598ddc09f1930670e_mergeImage.png",
+                "style": {
+                  "width": 52,
+                  "height": 16,
+                  "margin": "24px 0 0 991px"
+                }
+              }
+            },
+            {
+              "style": {
+                "backgroundColor": "rgba(232,232,232,1.000000)",
+                "borderRadius": "0px 0px 0px 0px",
+                "zIndex": 15,
+                "position": "static",
+                "left": 1352,
+                "top": 278,
+                "width": 1,
+                "height": 20,
+                "marginTop": 22,
+                "marginLeft": 20
+              },
+              "rowDims": {
+                "left": 1352,
+                "top": 278,
+                "width": 1,
+                "height": 20
+              },
+              "eleName": "Block_Rectangle2396_57096",
+              "id": "Block_Rectangle2396_57096",
+              "layerId": "253:37600",
+              "type": "lanhublock",
+              "data": {
+                "value": ""
+              },
+              "uiType": "",
+              "uiTypeProb": {},
+              "componentName": "lanhublock",
+              "children": [],
+              "props": {
+                "className": "group_2",
+                "style": {
+                  "backgroundColor": "rgba(232,232,232,1.000000)",
+                  "width": 1,
+                  "height": 20,
+                  "display": "flex",
+                  "flexDirection": "column",
+                  "margin": "22px 0 0 20px"
+                }
+              }
+            },
+            {
+              "style": {
+                "zIndex": 17,
+                "position": "static",
+                "left": 1369,
+                "top": 272,
+                "width": 32,
+                "height": 32,
+                "marginTop": 16,
+                "marginLeft": 16
+              },
+              "rowDims": {
+                "left": 1369,
+                "top": 272,
+                "width": 32,
+                "height": 32
+              },
+              "eleName": "Image_Frame220_28669",
+              "id": "Image_Frame220_28669",
+              "layerId": "253:37602",
+              "type": "lanhuimage",
+              "data": {
+                "value": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG43c1cf6132241c6f0e3c7963f6ad2f8f.png"
+              },
+              "uiType": "",
+              "uiTypeProb": {},
+              "componentName": "lanhuimage",
+              "children": [],
+              "props": {
+                "className": "label_2",
+                "src": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG43c1cf6132241c6f0e3c7963f6ad2f8f.png",
+                "style": {
+                  "width": 32,
+                  "height": 32,
+                  "margin": "16px 0 0 16px"
+                }
+              }
+            },
+            {
+              "style": {
+                "zIndex": "auto",
+                "position": "static",
+                "left": 1409,
+                "top": 267,
+                "width": 87,
+                "height": 42,
+                "marginTop": 11,
+                "marginLeft": 8
+              },
+              "rowDims": {
+                "left": 1409,
+                "top": 267,
+                "width": 87,
+                "height": 42
+              },
+              "eleName": "col___63558",
+              "id": "col___63558",
+              "layerId": "col_1409_267_87_42_470598",
+              "type": "lanhublock",
+              "data": {
+                "value": ""
+              },
+              "uiType": "",
+              "uiTypeProb": {},
+              "loopType": false,
+              "alignJustify": {
+                "justifyContent": "space-between"
+              },
+              "componentName": "lanhublock",
+              "children": [
+                {
+                  "style": {
+                    "zIndex": 20,
+                    "position": "static",
+                    "left": 1409,
+                    "top": 267,
+                    "width": 42,
+                    "height": 22,
+                    "overflowWrap": "break-word",
+                    "color": "rgba(33,33,33,1.000000)",
+                    "fontSize": 14,
+                    "fontFamily": "PingFang SC-Regular",
+                    "fontWeight": "normal",
+                    "textAlign": "left",
+                    "whiteSpace": "nowrap",
+                    "lineHeight": 22,
+                    "marginTop": 0,
+                    "marginLeft": 0
+                  },
+                  "rowDims": {
+                    "left": 1409,
+                    "top": 267,
+                    "width": 42,
+                    "height": 22
+                  },
+                  "eleName": "Text__666666_88772",
+                  "id": "Text__666666_88772",
+                  "layerId": "253:37606",
+                  "type": "lanhutext",
+                  "data": {
+                    "value": "痞老板"
+                  },
+                  "uiType": "",
+                  "uiTypeProb": {},
+                  "componentName": "lanhutext",
+                  "children": [],
+                  "props": {
+                    "className": "text_2",
+                    "text": "痞老板",
+                    "lines": 1,
+                    "style": {
+                      "width": 42,
+                      "height": 22,
+                      "overflowWrap": "break-word",
+                      "color": "rgba(33,33,33,1.000000)",
+                      "fontSize": 14,
+                      "fontFamily": "PingFang SC-Regular",
+                      "fontWeight": "normal",
+                      "textAlign": "left",
+                      "whiteSpace": "nowrap",
+                      "lineHeight": 22
+                    }
+                  }
+                },
+                {
+                  "style": {
+                    "zIndex": 21,
+                    "position": "static",
+                    "left": 1409,
+                    "top": 289,
+                    "width": 87,
+                    "height": 20,
+                    "overflowWrap": "break-word",
+                    "color": "rgba(209,209,209,1.000000)",
+                    "fontSize": 12,
+                    "fontFamily": "PingFang SC-Regular",
+                    "fontWeight": "normal",
+                    "textAlign": "left",
+                    "whiteSpace": "nowrap",
+                    "lineHeight": 20,
+                    "marginTop": 0,
+                    "marginBottom": 0,
+                    "marginLeft": 0
+                  },
+                  "rowDims": {
+                    "left": 1409,
+                    "top": 289,
+                    "width": 87,
+                    "height": 20
+                  },
+                  "eleName": "Text__666666_27092",
+                  "id": "Text__666666_27092",
+                  "layerId": "253:37607",
+                  "type": "lanhutext",
+                  "data": {
+                    "value": "1128766309"
+                  },
+                  "uiType": "",
+                  "uiTypeProb": {},
+                  "componentName": "lanhutext",
+                  "children": [],
+                  "props": {
+                    "className": "text_3",
+                    "text": "1128766309",
+                    "lines": 1,
+                    "style": {
+                      "width": 87,
+                      "height": 20,
+                      "overflowWrap": "break-word",
+                      "color": "rgba(209,209,209,1.000000)",
+                      "fontSize": 12,
+                      "fontFamily": "PingFang SC-Regular",
+                      "fontWeight": "normal",
+                      "textAlign": "left",
+                      "whiteSpace": "nowrap",
+                      "lineHeight": 20
+                    }
+                  }
+                }
+              ],
+              "props": {
+                "className": "text-wrapper_2",
+                "style": {
+                  "width": 87,
+                  "height": 42,
+                  "display": "flex",
+                  "flexDirection": "column",
+                  "justifyContent": "space-between",
+                  "margin": "11px 0 0 8px"
+                }
+              }
+            },
+            {
+              "style": {
+                "zIndex": 22,
+                "position": "static",
+                "left": 1500,
+                "top": 280,
+                "width": 16,
+                "height": 16,
+                "marginTop": 24,
+                "marginLeft": 4,
+                "marginRight": 24
+              },
+              "rowDims": {
+                "left": 1500,
+                "top": 280,
+                "width": 16,
+                "height": 16
+              },
+              "eleName": "Image_Frame_28677",
+              "id": "Image_Frame_28677",
+              "layerId": "253:37608",
+              "type": "lanhuimage",
+              "data": {
+                "value": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG763d2a57b5115e8e826432783f63f6a8.png"
+              },
+              "uiType": "",
+              "uiTypeProb": {},
+              "componentName": "lanhuimage",
+              "children": [],
+              "props": {
+                "className": "thumbnail_1",
+                "src": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG763d2a57b5115e8e826432783f63f6a8.png",
+                "style": {
+                  "width": 16,
+                  "height": 16,
+                  "margin": "24px 24px 0 4px"
+                }
+              }
+            }
+          ],
+          "props": {
+            "className": "group_1",
+            "style": {
+              "backgroundColor": "rgba(255,255,255,1.000000)",
+              "width": 1440,
+              "height": 64,
+              "border": "1px solid rgba(245,245,245,1)",
+              "flexDirection": "row",
+              "display": "flex",
+              "justifyContent": "flex-center"
+            }
+          }
+        },
+        {
+          "style": {
+            "zIndex": "auto",
+            "position": "static",
+            "left": 100,
+            "top": 320,
+            "width": 1416,
+            "height": 736,
+            "marginTop": 0,
+            "marginBottom": 0,
+            "marginLeft": 0
+          },
+          "rowDims": {
+            "left": 100,
+            "top": 320,
+            "width": 1416,
+            "height": 736
+          },
+          "eleName": "row___46340",
+          "id": "row___46340",
+          "layerId": "row_100_320_1416_736_679311",
+          "type": "lanhublock",
+          "data": {
+            "value": ""
+          },
+          "uiType": "",
+          "uiTypeProb": {},
+          "loopType": false,
+          "alignJustify": {
+            "justifyContent": "space-between"
+          },
+          "componentName": "lanhublock",
+          "children": [
+            {
+              "style": {
+                "backgroundColor": "rgba(255,255,255,1.000000)",
+                "borderRadius": "0px 0px 0px 0px",
+                "zIndex": 23,
+                "position": "static",
+                "left": 100,
+                "top": 320,
+                "width": 230,
+                "height": 736,
+                "marginTop": 0,
+                "marginLeft": 0
+              },
+              "rowDims": {
+                "left": 100,
+                "top": 320,
+                "width": 230,
+                "height": 736
+              },
+              "eleName": "col_Frame21_59088",
+              "id": "col_Frame21_59088",
+              "layerId": "253:37610",
+              "type": "lanhublock",
+              "data": {
+                "value": ""
+              },
+              "uiType": "",
+              "uiTypeProb": {},
+              "alignJustify": {},
+              "componentName": "lanhublock",
+              "children": [
+                {
+                  "style": {
+                    "backgroundColor": "rgba(255,255,255,1.000000)",
+                    "borderRadius": "4px 4px 4px 4px",
+                    "zIndex": 25,
+                    "position": "static",
+                    "left": 108,
+                    "top": 328,
+                    "width": 214,
+                    "height": 38,
+                    "marginLeft": 8,
+                    "marginTop": 8,
+                    "display": "flex",
+                    "flexDirection": "column"
+                  },
+                  "rowDims": {
+                    "left": 108,
+                    "top": 328,
+                    "width": 214,
+                    "height": 38
+                  },
+                  "eleName": "row_Frame15_59596",
+                  "id": "row_Frame15_59596",
+                  "layerId": "253:37612",
+                  "type": "lanhublock",
+                  "data": {
+                    "value": ""
+                  },
+                  "uiType": "",
+                  "uiTypeProb": {},
+                  "alignJustify": {},
+                  "componentName": "lanhublock",
+                  "children": [
+                    {
+                      "style": {
+                        "zIndex": "auto",
+                        "position": "static",
+                        "left": 124,
+                        "top": 336,
+                        "width": 80,
+                        "height": 22,
+                        "marginTop": 8,
+                        "marginLeft": 16
+                      },
+                      "rowDims": {
+                        "left": 124,
+                        "top": 336,
+                        "width": 80,
+                        "height": 22
+                      },
+                      "eleName": "row_rect_ImageTextFrame15_1_36690",
+                      "id": "row_rect_ImageTextFrame15_1_36690",
+                      "layerId": "rect_124_336_80_22_223850",
+                      "type": "lanhublock",
+                      "data": {
+                        "value": ""
+                      },
+                      "uiType": "ImageText",
+                      "uiTypeProb": {},
+                      "alignJustify": {
+                        "justifyContent": "space-between"
+                      },
+                      "componentName": "lanhublock",
+                      "children": [
+                        {
+                          "style": {
+                            "zIndex": 26,
+                            "position": "static",
+                            "left": 124,
+                            "top": 339,
+                            "width": 16,
+                            "height": 16,
+                            "marginTop": 3,
+                            "marginLeft": 0
+                          },
+                          "rowDims": {
+                            "left": 124,
+                            "top": 339,
+                            "width": 16,
+                            "height": 16
+                          },
+                          "eleName": "Image_Frame_79702",
+                          "id": "Image_Frame_79702",
+                          "layerId": "253:37613",
+                          "type": "lanhuimage",
+                          "data": {
+                            "value": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG917dc14e00e74f939aed1bd451b8853a.png"
+                          },
+                          "uiType": "",
+                          "uiTypeProb": {},
+                          "componentName": "lanhuimage",
+                          "children": [],
+                          "props": {
+                            "className": "thumbnail_2",
+                            "src": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG917dc14e00e74f939aed1bd451b8853a.png",
+                            "style": {
+                              "width": 16,
+                              "height": 16,
+                              "marginTop": 3
+                            }
+                          }
+                        },
+                        {
+                          "style": {
+                            "zIndex": 27,
+                            "position": "static",
+                            "left": 148,
+                            "top": 336,
+                            "width": 56,
+                            "height": 22,
+                            "overflowWrap": "break-word",
+                            "color": "rgba(33,33,33,1.000000)",
+                            "fontSize": 14,
+                            "fontFamily": "PingFang SC-Regular",
+                            "fontWeight": "normal",
+                            "textAlign": "left",
+                            "whiteSpace": "nowrap",
+                            "lineHeight": 22,
+                            "marginTop": 0,
+                            "marginRight": 0
+                          },
+                          "rowDims": {
+                            "left": 148,
+                            "top": 336,
+                            "width": 56,
+                            "height": 22
+                          },
+                          "eleName": "Text__3333_54408",
+                          "id": "Text__3333_54408",
+                          "layerId": "253:37617",
+                          "type": "lanhutext",
+                          "data": {
+                            "value": "应用管理"
+                          },
+                          "uiType": "TextGroup",
+                          "uiTypeProb": {},
+                          "componentName": "lanhutext",
+                          "children": [],
+                          "props": {
+                            "className": "text-group_1",
+                            "text": "应用管理",
+                            "lines": 1,
+                            "style": {
+                              "width": 56,
+                              "height": 22,
+                              "overflowWrap": "break-word",
+                              "color": "rgba(33,33,33,1.000000)",
+                              "fontSize": 14,
+                              "fontFamily": "PingFang SC-Regular",
+                              "fontWeight": "normal",
+                              "textAlign": "left",
+                              "whiteSpace": "nowrap",
+                              "lineHeight": 22
+                            }
+                          }
+                        }
+                      ],
+                      "props": {
+                        "className": "image-text_1",
+                        "style": {
+                          "width": 80,
+                          "height": 22,
+                          "flexDirection": "row",
+                          "display": "flex",
+                          "justifyContent": "space-between",
+                          "margin": "8px 0 0 16px"
+                        }
+                      }
+                    }
+                  ],
+                  "props": {
+                    "className": "group_4",
+                    "style": {
+                      "backgroundColor": "rgba(255,255,255,1.000000)",
+                      "borderRadius": "4px",
+                      "width": 214,
+                      "height": 38,
+                      "display": "flex",
+                      "flexDirection": "row",
+                      "margin": "8px 0 0 8px"
+                    }
+                  }
+                },
+                {
+                  "style": {
+                    "backgroundColor": "rgba(255,255,255,1.000000)",
+                    "borderRadius": "4px 4px 4px 4px",
+                    "zIndex": 28,
+                    "position": "static",
+                    "left": 108,
+                    "top": 374,
+                    "width": 214,
+                    "height": 38,
+                    "marginLeft": 8,
+                    "marginTop": 8,
+                    "display": "flex",
+                    "flexDirection": "column"
+                  },
+                  "rowDims": {
+                    "left": 108,
+                    "top": 374,
+                    "width": 214,
+                    "height": 38
+                  },
+                  "eleName": "row_Frame17_15060",
+                  "id": "row_Frame17_15060",
+                  "layerId": "253:37629",
+                  "type": "lanhublock",
+                  "data": {
+                    "value": ""
+                  },
+                  "uiType": "",
+                  "uiTypeProb": {},
+                  "alignJustify": {},
+                  "componentName": "lanhublock",
+                  "children": [
+                    {
+                      "style": {
+                        "zIndex": "auto",
+                        "position": "static",
+                        "left": 124,
+                        "top": 382,
+                        "width": 80,
+                        "height": 22,
+                        "marginTop": 8,
+                        "marginLeft": 16
+                      },
+                      "rowDims": {
+                        "left": 124,
+                        "top": 382,
+                        "width": 80,
+                        "height": 22
+                      },
+                      "eleName": "row_rect_ImageTextFrame17_1_8137",
+                      "id": "row_rect_ImageTextFrame17_1_8137",
+                      "layerId": "rect_124_382_80_22_807502",
+                      "type": "lanhublock",
+                      "data": {
+                        "value": ""
+                      },
+                      "uiType": "ImageText",
+                      "uiTypeProb": {},
+                      "alignJustify": {
+                        "justifyContent": "space-between"
+                      },
+                      "componentName": "lanhublock",
+                      "children": [
+                        {
+                          "style": {
+                            "zIndex": 29,
+                            "position": "static",
+                            "left": 124,
+                            "top": 385,
+                            "width": 16,
+                            "height": 16,
+                            "marginTop": 3,
+                            "marginLeft": 0
+                          },
+                          "rowDims": {
+                            "left": 124,
+                            "top": 385,
+                            "width": 16,
+                            "height": 16
+                          },
+                          "eleName": "Image_Frame_79870",
+                          "id": "Image_Frame_79870",
+                          "layerId": "253:37630",
+                          "type": "lanhuimage",
+                          "data": {
+                            "value": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG06a032eb6af702e66b93acc262889b0c.png"
+                          },
+                          "uiType": "",
+                          "uiTypeProb": {},
+                          "componentName": "lanhuimage",
+                          "children": [],
+                          "props": {
+                            "className": "thumbnail_3",
+                            "src": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG06a032eb6af702e66b93acc262889b0c.png",
+                            "style": {
+                              "width": 16,
+                              "height": 16,
+                              "marginTop": 3
+                            }
+                          }
+                        },
+                        {
+                          "style": {
+                            "zIndex": 30,
+                            "position": "static",
+                            "left": 148,
+                            "top": 382,
+                            "width": 56,
+                            "height": 22,
+                            "overflowWrap": "break-word",
+                            "color": "rgba(33,33,33,1.000000)",
+                            "fontSize": 14,
+                            "fontFamily": "PingFang SC-Regular",
+                            "fontWeight": "normal",
+                            "textAlign": "left",
+                            "whiteSpace": "nowrap",
+                            "lineHeight": 22,
+                            "marginTop": 0,
+                            "marginRight": 0
+                          },
+                          "rowDims": {
+                            "left": 148,
+                            "top": 382,
+                            "width": 56,
+                            "height": 22
+                          },
+                          "eleName": "Text__1111_42797",
+                          "id": "Text__1111_42797",
+                          "layerId": "253:37633",
+                          "type": "lanhutext",
+                          "data": {
+                            "value": "广告网络"
+                          },
+                          "uiType": "TextGroup",
+                          "uiTypeProb": {},
+                          "componentName": "lanhutext",
+                          "children": [],
+                          "props": {
+                            "className": "text-group_2",
+                            "text": "广告网络",
+                            "lines": 1,
+                            "style": {
+                              "width": 56,
+                              "height": 22,
+                              "overflowWrap": "break-word",
+                              "color": "rgba(33,33,33,1.000000)",
+                              "fontSize": 14,
+                              "fontFamily": "PingFang SC-Regular",
+                              "fontWeight": "normal",
+                              "textAlign": "left",
+                              "whiteSpace": "nowrap",
+                              "lineHeight": 22
+                            }
+                          }
+                        }
+                      ],
+                      "props": {
+                        "className": "image-text_2",
+                        "style": {
+                          "width": 80,
+                          "height": 22,
+                          "flexDirection": "row",
+                          "display": "flex",
+                          "justifyContent": "space-between",
+                          "margin": "8px 0 0 16px"
+                        }
+                      }
+                    }
+                  ],
+                  "props": {
+                    "className": "group_5",
+                    "style": {
+                      "backgroundColor": "rgba(255,255,255,1.000000)",
+                      "borderRadius": "4px",
+                      "width": 214,
+                      "height": 38,
+                      "display": "flex",
+                      "flexDirection": "row",
+                      "margin": "8px 0 0 8px"
+                    }
+                  }
+                },
+                {
+                  "style": {
+                    "backgroundColor": "rgba(255,255,255,1.000000)",
+                    "borderRadius": "4px 4px 4px 4px",
+                    "zIndex": 31,
+                    "position": "static",
+                    "left": 108,
+                    "top": 420,
+                    "width": 214,
+                    "height": 38,
+                    "marginLeft": 8,
+                    "marginTop": 8,
+                    "display": "flex",
+                    "flexDirection": "column"
+                  },
+                  "rowDims": {
+                    "left": 108,
+                    "top": 420,
+                    "width": 214,
+                    "height": 38
+                  },
+                  "eleName": "row_Frame16_3822",
+                  "id": "row_Frame16_3822",
+                  "layerId": "253:37618",
+                  "type": "lanhublock",
+                  "data": {
+                    "value": ""
+                  },
+                  "uiType": "",
+                  "uiTypeProb": {},
+                  "alignJustify": {},
+                  "componentName": "lanhublock",
+                  "children": [
+                    {
+                      "style": {
+                        "zIndex": "auto",
+                        "position": "static",
+                        "left": 124,
+                        "top": 428,
+                        "width": 80,
+                        "height": 22,
+                        "marginTop": 8,
+                        "marginLeft": 16
+                      },
+                      "rowDims": {
+                        "left": 124,
+                        "top": 428,
+                        "width": 80,
+                        "height": 22
+                      },
+                      "eleName": "row_rect_ImageTextFrame16_1_50746",
+                      "id": "row_rect_ImageTextFrame16_1_50746",
+                      "layerId": "rect_124_428_80_22_113410",
+                      "type": "lanhublock",
+                      "data": {
+                        "value": ""
+                      },
+                      "uiType": "ImageText",
+                      "uiTypeProb": {},
+                      "alignJustify": {
+                        "justifyContent": "space-between"
+                      },
+                      "componentName": "lanhublock",
+                      "children": [
+                        {
+                          "style": {
+                            "zIndex": 32,
+                            "position": "static",
+                            "left": 124,
+                            "top": 431,
+                            "width": 16,
+                            "height": 16,
+                            "marginTop": 3,
+                            "marginLeft": 0
+                          },
+                          "rowDims": {
+                            "left": 124,
+                            "top": 431,
+                            "width": 16,
+                            "height": 16
+                          },
+                          "eleName": "Image_Frame_89506",
+                          "id": "Image_Frame_89506",
+                          "layerId": "253:37619",
+                          "type": "lanhuimage",
+                          "data": {
+                            "value": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNGd7cab11203efdb8f92d217352233eeaf.png"
+                          },
+                          "uiType": "",
+                          "uiTypeProb": {},
+                          "componentName": "lanhuimage",
+                          "children": [],
+                          "props": {
+                            "className": "thumbnail_4",
+                            "src": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNGd7cab11203efdb8f92d217352233eeaf.png",
+                            "style": {
+                              "width": 16,
+                              "height": 16,
+                              "marginTop": 3
+                            }
+                          }
+                        },
+                        {
+                          "style": {
+                            "zIndex": 33,
+                            "position": "static",
+                            "left": 148,
+                            "top": 428,
+                            "width": 56,
+                            "height": 22,
+                            "overflowWrap": "break-word",
+                            "color": "rgba(33,33,33,1.000000)",
+                            "fontSize": 14,
+                            "fontFamily": "PingFang SC-Regular",
+                            "fontWeight": "normal",
+                            "textAlign": "left",
+                            "whiteSpace": "nowrap",
+                            "lineHeight": 22,
+                            "marginTop": 0,
+                            "marginRight": 0
+                          },
+                          "rowDims": {
+                            "left": 148,
+                            "top": 428,
+                            "width": 56,
+                            "height": 22
+                          },
+                          "eleName": "Text__5555_85609",
+                          "id": "Text__5555_85609",
+                          "layerId": "253:37628",
+                          "type": "lanhutext",
+                          "data": {
+                            "value": "聚合管理"
+                          },
+                          "uiType": "TextGroup",
+                          "uiTypeProb": {},
+                          "componentName": "lanhutext",
+                          "children": [],
+                          "props": {
+                            "className": "text-group_3",
+                            "text": "聚合管理",
+                            "lines": 1,
+                            "style": {
+                              "width": 56,
+                              "height": 22,
+                              "overflowWrap": "break-word",
+                              "color": "rgba(33,33,33,1.000000)",
+                              "fontSize": 14,
+                              "fontFamily": "PingFang SC-Regular",
+                              "fontWeight": "normal",
+                              "textAlign": "left",
+                              "whiteSpace": "nowrap",
+                              "lineHeight": 22
+                            }
+                          }
+                        }
+                      ],
+                      "props": {
+                        "className": "image-text_3",
+                        "style": {
+                          "width": 80,
+                          "height": 22,
+                          "flexDirection": "row",
+                          "display": "flex",
+                          "justifyContent": "space-between",
+                          "margin": "8px 0 0 16px"
+                        }
+                      }
+                    }
+                  ],
+                  "props": {
+                    "className": "group_6",
+                    "style": {
+                      "backgroundColor": "rgba(255,255,255,1.000000)",
+                      "borderRadius": "4px",
+                      "width": 214,
+                      "height": 38,
+                      "display": "flex",
+                      "flexDirection": "row",
+                      "margin": "8px 0 0 8px"
+                    }
+                  }
+                },
+                {
+                  "style": {
+                    "zIndex": "auto",
+                    "position": "static",
+                    "left": 124,
+                    "top": 474,
+                    "width": 202,
+                    "height": 22,
+                    "marginLeft": 24,
+                    "marginTop": 16
+                  },
+                  "rowDims": {
+                    "left": 124,
+                    "top": 474,
+                    "width": 202,
+                    "height": 22
+                  },
+                  "eleName": "row___14043",
+                  "id": "row___14043",
+                  "layerId": "row_124_474_202_22_863400",
+                  "type": "lanhublock",
+                  "data": {
+                    "value": ""
+                  },
+                  "uiType": "",
+                  "uiTypeProb": {},
+                  "loopType": false,
+                  "alignJustify": {
+                    "justifyContent": "space-between"
+                  },
+                  "componentName": "lanhublock",
+                  "children": [
+                    {
+                      "style": {
+                        "zIndex": "auto",
+                        "position": "static",
+                        "left": 124,
+                        "top": 474,
+                        "width": 80,
+                        "height": 22,
+                        "marginTop": 0,
+                        "marginLeft": 0
+                      },
+                      "rowDims": {
+                        "left": 124,
+                        "top": 474,
+                        "width": 80,
+                        "height": 22
+                      },
+                      "eleName": "row_rect_ImageTextFrame21_1_88316",
+                      "id": "row_rect_ImageTextFrame21_1_88316",
+                      "layerId": "rect_124_474_80_22_865232",
+                      "type": "lanhublock",
+                      "data": {
+                        "value": ""
+                      },
+                      "uiType": "ImageText",
+                      "uiTypeProb": {},
+                      "alignJustify": {
+                        "justifyContent": "space-between"
+                      },
+                      "componentName": "lanhublock",
+                      "children": [
+                        {
+                          "style": {
+                            "zIndex": 36,
+                            "position": "static",
+                            "left": 124,
+                            "top": 477,
+                            "width": 16,
+                            "height": 16,
+                            "marginTop": 3,
+                            "marginLeft": 0
+                          },
+                          "rowDims": {
+                            "left": 124,
+                            "top": 477,
+                            "width": 16,
+                            "height": 16
+                          },
+                          "eleName": "Image_Frame_7231",
+                          "id": "Image_Frame_7231",
+                          "layerId": "253:37636",
+                          "type": "lanhuimage",
+                          "data": {
+                            "value": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG19ef629c406fb73fa889d182a71c048c.png"
+                          },
+                          "uiType": "",
+                          "uiTypeProb": {},
+                          "componentName": "lanhuimage",
+                          "children": [],
+                          "props": {
+                            "className": "thumbnail_5",
+                            "src": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG19ef629c406fb73fa889d182a71c048c.png",
+                            "style": {
+                              "width": 16,
+                              "height": 16,
+                              "marginTop": 3
+                            }
+                          }
+                        },
+                        {
+                          "style": {
+                            "zIndex": 37,
+                            "position": "static",
+                            "left": 148,
+                            "top": 474,
+                            "width": 56,
+                            "height": 22,
+                            "overflowWrap": "break-word",
+                            "color": "rgba(33,33,33,1.000000)",
+                            "fontSize": 14,
+                            "fontFamily": "PingFang SC-Regular",
+                            "fontWeight": "normal",
+                            "textAlign": "left",
+                            "whiteSpace": "nowrap",
+                            "lineHeight": 22,
+                            "marginTop": 0,
+                            "marginRight": 0
+                          },
+                          "rowDims": {
+                            "left": 148,
+                            "top": 474,
+                            "width": 56,
+                            "height": 22
+                          },
+                          "eleName": "Text__2222_14273",
+                          "id": "Text__2222_14273",
+                          "layerId": "253:37639",
+                          "type": "lanhutext",
+                          "data": {
+                            "value": "数据报表"
+                          },
+                          "uiType": "TextGroup",
+                          "uiTypeProb": {},
+                          "componentName": "lanhutext",
+                          "children": [],
+                          "props": {
+                            "className": "text-group_4",
+                            "text": "数据报表",
+                            "lines": 1,
+                            "style": {
+                              "width": 56,
+                              "height": 22,
+                              "overflowWrap": "break-word",
+                              "color": "rgba(33,33,33,1.000000)",
+                              "fontSize": 14,
+                              "fontFamily": "PingFang SC-Regular",
+                              "fontWeight": "normal",
+                              "textAlign": "left",
+                              "whiteSpace": "nowrap",
+                              "lineHeight": 22
+                            }
+                          }
+                        }
+                      ],
+                      "props": {
+                        "className": "image-text_4",
+                        "style": {
+                          "width": 80,
+                          "height": 22,
+                          "flexDirection": "row",
+                          "display": "flex",
+                          "justifyContent": "space-between"
+                        }
+                      }
+                    },
+                    {
+                      "style": {
+                        "zIndex": 38,
+                        "position": "static",
+                        "left": 310,
+                        "top": 477,
+                        "width": 16,
+                        "height": 16,
+                        "marginTop": 3,
+                        "marginRight": 0
+                      },
+                      "rowDims": {
+                        "left": 310,
+                        "top": 477,
+                        "width": 16,
+                        "height": 16
+                      },
+                      "eleName": "Image_Frame_81218",
+                      "id": "Image_Frame_81218",
+                      "layerId": "253:37640",
+                      "type": "lanhuimage",
+                      "data": {
+                        "value": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG0f1631cb872c5e5a700c74f2edeb35c0.png"
+                      },
+                      "uiType": "",
+                      "uiTypeProb": {},
+                      "componentName": "lanhuimage",
+                      "children": [],
+                      "props": {
+                        "className": "thumbnail_6",
+                        "src": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG0f1631cb872c5e5a700c74f2edeb35c0.png",
+                        "style": {
+                          "width": 16,
+                          "height": 16,
+                          "marginTop": 3
+                        }
+                      }
+                    }
+                  ],
+                  "props": {
+                    "className": "group_7",
+                    "style": {
+                      "width": 202,
+                      "height": 22,
+                      "flexDirection": "row",
+                      "display": "flex",
+                      "justifyContent": "space-between",
+                      "margin": "16px 0 0 24px"
+                    }
+                  }
+                },
+                {
+                  "style": {
+                    "zIndex": 40,
+                    "position": "static",
+                    "left": 124,
+                    "top": 1024,
+                    "width": 16,
+                    "height": 16,
+                    "marginLeft": 24,
+                    "marginTop": 528,
+                    "marginBottom": 16
+                  },
+                  "rowDims": {
+                    "left": 124,
+                    "top": 1024,
+                    "width": 16,
+                    "height": 16
+                  },
+                  "eleName": "Image_Frame_42040",
+                  "id": "Image_Frame_42040",
+                  "layerId": "253:37647",
+                  "type": "lanhuimage",
+                  "data": {
+                    "value": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNGec5c92c686b83232d1b15743ae5834c9.png"
+                  },
+                  "uiType": "",
+                  "uiTypeProb": {},
+                  "componentName": "lanhuimage",
+                  "children": [],
+                  "props": {
+                    "className": "thumbnail_7",
+                    "src": "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNGec5c92c686b83232d1b15743ae5834c9.png",
+                    "style": {
+                      "width": 16,
+                      "height": 16,
+                      "margin": "528px 0 16px 24px"
+                    }
+                  }
+                }
+              ],
+              "props": {
+                "className": "box_1",
+                "style": {
+                  "backgroundColor": "rgba(255,255,255,1.000000)",
+                  "width": 230,
+                  "height": 736,
+                  "display": "flex",
+                  "flexDirection": "column"
+                }
+              }
+            },
+            {
+              "style": {
+                "backgroundColor": "rgba(255,255,255,1.000000)",
+                "borderRadius": "8px 8px 8px 8px",
+                "zIndex": 41,
+                "position": "static",
+                "left": 354,
+                "top": 344,
+                "width": 1162,
+                "height": 688,
+                "marginTop": 24,
+                "marginRight": 0
+              },
+              "rowDims": {
+                "left": 354,
+                "top": 344,
+                "width": 1162,
+                "height": 688
+              },
+              "eleName": "col_Frame1312318192_36452",
+              "id": "col_Frame1312318192_36452",
+              "layerId": "253:37653",
+              "type": "lanhublock",
+              "data": {
+                "value": ""
+              },
+              "uiType": "",
+              "uiTypeProb": {},
+              "alignJustify": {},
+              "componentName": "lanhublock",
+              "children": [
+                {
+                  "style": {
+                    "zIndex": 44,
+                    "position": "static",
+                    "left": 882,
+                    "top": 631,
+                    "width": 105,
+                    "height": 79,
+                    "marginLeft": 528,
+                    "marginTop": 287
+                  },
+                  "rowDims": {
+                    "left": 882,
+                    "top": 631,
+                    "width": 105,
+                    "height": 79
+                  },
+                  "eleName": "Image_mergeImage_92445",
+                  "id": "Image_mergeImage_92445",
+                  "layerId": "259:7475",
+                  "type": "lanhuimage",
+                  "data": {
+                    "value": "https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/ef9b265b63954499bb0c31a84c32fc00_mergeImage.png"
+                  },
+                  "uiType": "",
+                  "uiTypeProb": {},
+                  "componentName": "lanhuimage",
+                  "children": [],
+                  "props": {
+                    "className": "image_4",
+                    "src": "https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/ef9b265b63954499bb0c31a84c32fc00_mergeImage.png",
+                    "style": {
+                      "width": 105,
+                      "height": 79,
+                      "margin": "287px 0 0 528px"
+                    }
+                  }
+                },
+                {
+                  "style": {
+                    "zIndex": 45,
+                    "position": "static",
+                    "left": 775,
+                    "top": 740,
+                    "width": 320,
+                    "height": 24,
+                    "overflowWrap": "break-word",
+                    "color": "rgba(82,82,82,1.000000)",
+                    "fontSize": 16,
+                    "fontFamily": "PingFang SC-Regular",
+                    "fontWeight": "normal",
+                    "textAlign": "center",
+                    "whiteSpace": "nowrap",
+                    "lineHeight": 24,
+                    "marginLeft": 421,
+                    "marginTop": 30,
+                    "marginBottom": 268
+                  },
+                  "rowDims": {
+                    "left": 775,
+                    "top": 740,
+                    "width": 320,
+                    "height": 24
+                  },
+                  "eleName": "Text__333333333333333333_96606",
+                  "id": "Text__333333333333333333_96606",
+                  "layerId": "254:7346",
+                  "type": "lanhutext",
+                  "data": {
+                    "value": "账号暂无权限，可联系&nbsp;商务&nbsp;或&nbsp;公司超管开通"
+                  },
+                  "uiType": "",
+                  "uiTypeProb": {},
+                  "componentName": "lanhutext",
+                  "children": [],
+                  "props": {
+                    "className": "text_4",
+                    "text": "账号暂无权限，可联系&nbsp;商务&nbsp;或&nbsp;公司超管开通",
+                    "lines": 1,
+                    "style": {
+                      "width": 320,
+                      "height": 24,
+                      "overflowWrap": "break-word",
+                      "color": "rgba(82,82,82,1.000000)",
+                      "fontSize": 16,
+                      "fontFamily": "PingFang SC-Regular",
+                      "fontWeight": "normal",
+                      "textAlign": "center",
+                      "whiteSpace": "nowrap",
+                      "lineHeight": 24,
+                      "margin": "30px 0 268px 421px"
+                    }
+                  }
+                }
+              ],
+              "props": {
+                "className": "box_2",
+                "style": {
+                  "backgroundColor": "rgba(255,255,255,1.000000)",
+                  "borderRadius": "8px",
+                  "width": 1162,
+                  "height": 688,
+                  "marginTop": 24,
+                  "display": "flex",
+                  "flexDirection": "column"
+                }
+              }
+            }
+          ],
+          "props": {
+            "className": "group_3",
+            "style": {
+              "width": 1416,
+              "height": 736,
+              "flexDirection": "row",
+              "display": "flex",
+              "justifyContent": "space-between"
+            }
+          }
+        }
+      ],
+      "props": {
+        "className": "block_1",
+        "style": {
+          "backgroundColor": "rgba(250,250,250,1.000000)",
+          "width": 1440,
+          "height": 800,
+          "display": "flex",
+          "flexDirection": "column",
+          "justifyContent": "space-between",
+          "margin": "52px 0 1242px 100px"
+        }
+      }
+    }
+  ],
+  "thirdpartyComponent": "none"
+}

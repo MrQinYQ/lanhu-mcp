@@ -1,0 +1,67 @@
+html {
+  font-size: 37.5px;
+}
+
+.page {
+  width: 10rem;
+  height: 13.334rem;
+  background: white;
+}
+
+.list {
+  width: 8rem;
+}
+
+.row-0 {
+  margin-right: 0.267rem;
+  margin-bottom: 0;
+  background: red;
+}
+
+.text-0 {
+  font-size: 0.426rem;
+  line-height: 0.64rem;
+  color: #f00;
+}
+
+.image-0 {
+  width: 1.067rem;
+  height: 1.067rem;
+}
+
+.optional-0 {
+  font-size: 0.293rem;
+}
+
+.row-1 {
+  margin-right: 0;
+  margin-bottom: 0;
+  background: blue;
+}
+
+.text-1 {
+  font-size: 0.426rem;
+  line-height: 0.64rem;
+  color: #00f;
+}
+
+.image-1 {
+  width: 1.067rem;
+  height: 1.067rem;
+}
+
+.input {
+  width: 2.667rem;
+  height: 0.8rem;
+  font-size: 0.4rem;
+}
+
+.button {
+  border-width: 1px;
+  margin: 0.267rem 0.534rem;
+  padding: 0rem;
+  background: url(example.png) 0.267rem 0.534rem no-repeat;
+  -webkit-line-clamp: 2;
+  font-weight: 600;
+  opacity: 0.5;
+}

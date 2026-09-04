@@ -1,0 +1,37 @@
+{
+  "index.html": {
+    "byte_equal": true,
+    "ui_bytes": 39384,
+    "generator_bytes": 39384,
+    "ui_sha256": "f66cd2d964e9567acf1a23da4ba1796eef0376314652d08f95991ceb2cfb4b21",
+    "generator_sha256": "f66cd2d964e9567acf1a23da4ba1796eef0376314652d08f95991ceb2cfb4b21"
+  },
+  "index.css": {
+    "byte_equal": true,
+    "ui_bytes": 63448,
+    "generator_bytes": 63448,
+    "ui_sha256": "70cc77613647808d9a6af87b33e9f0ae4e8d3992974dfa6bb725e48015ecf4dd",
+    "generator_sha256": "70cc77613647808d9a6af87b33e9f0ae4e8d3992974dfa6bb725e48015ecf4dd"
+  },
+  "index.rem.css": {
+    "byte_equal": true,
+    "ui_bytes": 69366,
+    "generator_bytes": 69366,
+    "ui_sha256": "fb07ab1c055210fd462f3148ead216c453f8cf13e6071d5bb48739a43a0e41f1",
+    "generator_sha256": "fb07ab1c055210fd462f3148ead216c453f8cf13e6071d5bb48739a43a0e41f1"
+  },
+  "index.response.css": {
+    "byte_equal": true,
+    "ui_bytes": 66272,
+    "generator_bytes": 66272,
+    "ui_sha256": "bfbbb9284d41ac0a39c23b39c98cc1434aca86b2b744dc19b0f2ad20409a368e",
+    "generator_sha256": "bfbbb9284d41ac0a39c23b39c98cc1434aca86b2b744dc19b0f2ad20409a368e"
+  },
+  "common.css": {
+    "byte_equal": true,
+    "ui_bytes": 1095,
+    "generator_bytes": 1095,
+    "ui_sha256": "91e9608e9c561d58afada59680d227ba74aa0dac98a339571e3acd56d23624ea",
+    "generator_sha256": "91e9608e9c561d58afada59680d227ba74aa0dac98a339571e3acd56d23624ea"
+  }
+}

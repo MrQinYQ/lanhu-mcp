@@ -1,0 +1,32 @@
+{
+  "sources": {
+    "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG75a0418c3e91f2917cb9a254282053ca.png": {
+      "path": "images/source-1.png",
+      "sha256": "28a730bd258f41b2a07478a997aec34a6b5236f0aa146917c880b4aca2240063"
+    },
+    "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG15f8e56a253d23d48d84247fe6066a53.png": {
+      "path": "images/source-2.png",
+      "sha256": "4f927c2c0dda7fdfefa48edc58495c072ce89418d70f4d57ae1e7ac9f5522c05"
+    }
+  },
+  "assets": {
+    "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG75a0418c3e91f2917cb9a254282053ca.png": {
+      "path": "images/source-1.png",
+      "sha256": "28a730bd258f41b2a07478a997aec34a6b5236f0aa146917c880b4aca2240063"
+    },
+    "https://lanhu-oss-2537-2.lanhuapp.com/FigmaDDSSlicePNG15f8e56a253d23d48d84247fe6066a53.png": {
+      "path": "images/source-2.png",
+      "sha256": "4f927c2c0dda7fdfefa48edc58495c072ce89418d70f4d57ae1e7ac9f5522c05"
+    },
+    "https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/b02215cb20e64c88b13b93f10cf88b93_mergeImage.png": {
+      "path": "images/composite-reference.png",
+      "sha256": "00fb31458a2f0c7ba60f35487b62e4121f143504611e3affedc0c358b2268eda"
+    }
+  },
+  "expected_composite": {
+    "path": "images/composite-reference.png",
+    "sha256": "00fb31458a2f0c7ba60f35487b62e4121f143504611e3affedc0c358b2268eda",
+    "url": "https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/b02215cb20e64c88b13b93f10cf88b93_mergeImage.png",
+    "layerId": "252:36713"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "version_id": "d4e341f9-71f7-4fa7-82b8-e9207f842741",
+  "files": [
+    {
+      "file": "index.html",
+      "byte_equal": true,
+      "bytes": 125607,
+      "ui_sha256": "d6906ba37e3943fe85c4a8d5eeb6b7f5ffef5d8f57c3802ef3a7e7048dad83e0",
+      "generator_sha256": "d6906ba37e3943fe85c4a8d5eeb6b7f5ffef5d8f57c3802ef3a7e7048dad83e0"
+    },
+    {
+      "file": "index.css",
+      "byte_equal": true,
+      "bytes": 206157,
+      "ui_sha256": "9e9b0dee9ccd887800d1306b68178f7f314ce1f99e6509cdfc8347621d6525aa",
+      "generator_sha256": "9e9b0dee9ccd887800d1306b68178f7f314ce1f99e6509cdfc8347621d6525aa"
+    },
+    {
+      "file": "index.rem.css",
+      "byte_equal": true,
+      "bytes": 224971,
+      "ui_sha256": "37a9386074b73b50ef04fdf39eeeaa9bb1507efd38bf16e4996513204cc48b34",
+      "generator_sha256": "37a9386074b73b50ef04fdf39eeeaa9bb1507efd38bf16e4996513204cc48b34"
+    },
+    {
+      "file": "index.response.css",
+      "byte_equal": true,
+      "bytes": 215572,
+      "ui_sha256": "a6c2470f98de5f53f2a7a066eb405e4d3a447a014d7e11e07c6d0ab7b6f9ed2a",
+      "generator_sha256": "a6c2470f98de5f53f2a7a066eb405e4d3a447a014d7e11e07c6d0ab7b6f9ed2a"
+    },
+    {
+      "file": "common.css",
+      "byte_equal": true,
+      "bytes": 1095,
+      "ui_sha256": "91e9608e9c561d58afada59680d227ba74aa0dac98a339571e3acd56d23624ea",
+      "generator_sha256": "91e9608e9c561d58afada59680d227ba74aa0dac98a339571e3acd56d23624ea"
+    }
+  ]
+}

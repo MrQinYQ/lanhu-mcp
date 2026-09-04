@@ -1,0 +1,63 @@
+.page {
+  width: 100vw;
+  height: 133.34vw;
+  background: white;
+}
+
+.list {
+  width: 80vw;
+}
+
+.row-0 {
+  margin-right: 2.67vw;
+  margin-bottom: 0;
+  background: red;
+}
+
+.text-0 {
+  font-size: 4.26vw;
+  line-height: 6.4vw;
+  color: #f00;
+}
+
+.image-0 {
+  width: 10.67vw;
+  height: 10.67vw;
+}
+
+.optional-0 {
+  font-size: 2.93vw;
+}
+
+.row-1 {
+  margin-right: 0;
+  margin-bottom: 0;
+  background: blue;
+}
+
+.text-1 {
+  font-size: 4.26vw;
+  line-height: 6.4vw;
+  color: #00f;
+}
+
+.image-1 {
+  width: 10.67vw;
+  height: 10.67vw;
+}
+
+.input {
+  width: 26.67vw;
+  height: 8vw;
+  font-size: 4vw;
+}
+
+.button {
+  border-width: 1px;
+  margin: 2.66vw 5.33vw;
+  padding: 0vw;
+  background: url(example.png) 2.67vw 5.34vw no-repeat;
+  -webkit-line-clamp: 2;
+  font-weight: 600;
+  opacity: 0.5;
+}

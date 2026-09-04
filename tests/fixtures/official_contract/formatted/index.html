@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./common.css" />
+    <link rel="stylesheet" type="text/css" href="./index.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="list flex-row">
+        <div class="row-0">
+          <span class="text-0">First</span>
+          <img
+            class="image-0"
+            referrerpolicy="no-referrer"
+            src="https://example.org/a.png"
+          />
+          <span class="optional-0">optional</span>
+        </div>
+        <div class="row-1">
+          <span class="text-1">Second</span>
+          <img
+            class="image-1"
+            referrerpolicy="no-referrer"
+            src="https://example.org/b.png"
+          />
+        </div>
+      </div>
+      <input
+        v-if="visible"
+        class="input"
+        placeholder="Name"
+        style="width: 100px; height: 30px"
+      /><button class="button flex-col justify-between align-center"></button>
+    </div>
+  </body>
+</html>

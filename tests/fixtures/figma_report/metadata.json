@@ -1,0 +1,92 @@
+{
+  "retrieved_at": "2026-09-03T13:06:12.572367+00:00",
+  "image_id": "f820de46-8bed-41b1-8cd7-dfd15fd98ebf",
+  "project_id": "30fd9a8a-d11d-4e07-b3dc-3caa63a7f44b",
+  "team_id": "c4ccb621-2a12-4375-a67f-a6c3dc6bbc88",
+  "name": "综合报表",
+  "version": {
+    "id": "a6179157-7c24-4153-ab4c-7b7c803b49b5",
+    "version_info": "版本4",
+    "json_url": "https://alipic.lanhuapp.com/FigmaJSON8fcc8c6eb1e8228c895d5cba18baa8e4.json",
+    "d2c_url": null,
+    "create_time": "Thu, 03 Sep 2026 11:06:11 UTC",
+    "update_time": null
+  },
+  "versions": [
+    {
+      "id": "a6179157-7c24-4153-ab4c-7b7c803b49b5",
+      "version_info": "版本4",
+      "json_url": "https://alipic.lanhuapp.com/FigmaJSON8fcc8c6eb1e8228c895d5cba18baa8e4.json",
+      "d2c_url": null
+    },
+    {
+      "id": "1e6e265d-b303-4ce0-a0c7-66c6bd5e3f2c",
+      "version_info": "版本3",
+      "json_url": "https://alipic.lanhuapp.com/FigmaJSON3a032047ba81e928dbc5a0861f08ca30.json",
+      "d2c_url": null
+    },
+    {
+      "id": "5bdac33a-7c26-424d-9c31-6f8d41857d42",
+      "version_info": "版本2",
+      "json_url": "https://alipic.lanhuapp.com/FigmaJSON83348f01368b1769ef2681b0c373ebd3.json",
+      "d2c_url": null
+    },
+    {
+      "id": "3533316e-3fbd-4f4e-b627-264657dc147e",
+      "version_info": "版本1",
+      "json_url": "https://alipic.lanhuapp.com/FigmaJSON83348f01368b1769ef2681b0c373ebd3.json",
+      "d2c_url": null
+    }
+  ],
+  "raw_url": "https://alipic.lanhuapp.com/FigmaJSON8fcc8c6eb1e8228c895d5cba18baa8e4.json",
+  "official_schema_url": "https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/dds_backend/prod/pipeline/schema_dc7031c1eadc40b28814473f491378e2/schema.json",
+  "schema_version_id": "77e938e3-a0f2-493e-b4b5-8813b901e4b6",
+  "image_url": "https://alipic.lanhuapp.com/FigmaCover8d8872b59b468830f9f60f70f5112712.png",
+  "sha256": {
+    "image-resources.json": "9c7f629660d8c5062026175115f7bbde1ad22b1cd13c039407716fde9329629d",
+    "official-schema.json": "a4269a5dcd57ee43df100dcea56f67ed2ef24b5eeb761d1216b571cf1bcc2a08",
+    "raw.json": "496c72d05657eb3bb7cb7487e16e0d993b42eb7719c72b74bb33042df113e78d",
+    "images/composite-reference.png": "00fb31458a2f0c7ba60f35487b62e4121f143504611e3affedc0c358b2268eda",
+    "images/source-1.png": "28a730bd258f41b2a07478a997aec34a6b5236f0aa146917c880b4aca2240063",
+    "images/source-2.png": "4f927c2c0dda7fdfefa48edc58495c072ce89418d70f4d57ae1e7ac9f5522c05",
+    "official-ui/index.html": "bccc4bf155a314cb5d03228e20758d41f0a79ef4999a2c8e66af57b2bc003763",
+    "official-ui/index.response.css": "d5600a7aab774c3c0717d450266a1b12be3b5a55bde71ed3dc3be69878b2ea27",
+    "official-ui/index.css": "2a73f97929433db468053a02d17c01de54e2e1ecab34f0f06b3982c5639897eb",
+    "official-ui/common.css": "91e9608e9c561d58afada59680d227ba74aa0dac98a339571e3acd56d23624ea",
+    "official-ui/index.rem.css": "83067280c0ea529ac87dbf9d59ef63d8e6f375fb0a7654ffb6e02b41b3659362"
+  },
+  "ui_provenance": {
+    "source": "Official DDS web editor, selected entire HTML/CSS through editor controls",
+    "version_id": "a6179157-7c24-4153-ab4c-7b7c803b49b5",
+    "url": "https://dds.lanhuapp.com/#/?version_id=a6179157-7c24-4153-ab4c-7b7c803b49b5&source=detailDetachTab&plugin=figma&plugin_version=1.2.24",
+    "files": {
+      "index.html": {
+        "bytes": 20849,
+        "sha256": "bccc4bf155a314cb5d03228e20758d41f0a79ef4999a2c8e66af57b2bc003763"
+      },
+      "index.css": {
+        "bytes": 33878,
+        "sha256": "2a73f97929433db468053a02d17c01de54e2e1ecab34f0f06b3982c5639897eb"
+      },
+      "index.rem.css": {
+        "bytes": 36972,
+        "sha256": "83067280c0ea529ac87dbf9d59ef63d8e6f375fb0a7654ffb6e02b41b3659362"
+      },
+      "index.response.css": {
+        "bytes": 35489,
+        "sha256": "d5600a7aab774c3c0717d450266a1b12be3b5a55bde71ed3dc3be69878b2ea27"
+      },
+      "common.css": {
+        "bytes": 1095,
+        "sha256": "91e9608e9c561d58afada59680d227ba74aa0dac98a339571e3acd56d23624ea"
+      }
+    }
+  },
+  "unchanged_first_run": {
+    "nodes": 216,
+    "official_nodes": 206,
+    "passed": false,
+    "browser_differing_pixels": 7851,
+    "evidence": "data/codegen-review/third/baseline"
+  }
+}

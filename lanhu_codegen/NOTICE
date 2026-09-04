@@ -1,0 +1,20 @@
+Source and license notice
+=========================
+
+The HTML generator was extracted from the publicly delivered Lanhu DDS frontend:
+https://dds.lanhuapp.com/js/home.ae626768.js
+Module 24c8, called by wrapper module 6ce9.
+
+No explicit open-source license for the Lanhu-specific generator was found in
+the inspected public frontend assets. This directory does not assert ownership
+of that code or grant rights beyond those provided by its copyright holder.
+
+The dependency bundle preserves the original embedded license notices. Notable
+dependencies include Prettier 2.5.1 and Lodash 4.17.21 (MIT), the buffer module
+(MIT), and ieee754 (BSD-3-Clause). Parsers include their own original copyright
+notices, including Google's HTML parser notice. Exact source files and SHA-256
+digests are recorded in source-manifest.json.
+
+This integration changes the generator's loop property lookups to avoid
+evaluating schema content as JavaScript. See README.md and source-manifest.json
+for the full list of integration changes.

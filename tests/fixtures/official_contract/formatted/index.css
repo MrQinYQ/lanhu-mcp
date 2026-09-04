@@ -1,0 +1,63 @@
+.page {
+  width: 375px;
+  height: 500px;
+  background: white;
+}
+
+.list {
+  width: 300px;
+}
+
+.row-0 {
+  margin-right: 10px;
+  margin-bottom: 0;
+  background: red;
+}
+
+.text-0 {
+  font-size: 16px;
+  line-height: 24px;
+  color: #f00;
+}
+
+.image-0 {
+  width: 40px;
+  height: 40px;
+}
+
+.optional-0 {
+  font-size: 11px;
+}
+
+.row-1 {
+  margin-right: 0;
+  margin-bottom: 0;
+  background: blue;
+}
+
+.text-1 {
+  font-size: 16px;
+  line-height: 24px;
+  color: #00f;
+}
+
+.image-1 {
+  width: 40px;
+  height: 40px;
+}
+
+.input {
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+}
+
+.button {
+  border-width: 1px;
+  margin: 10px 20px;
+  padding: 0px;
+  background: url(example.png) 10px 20px no-repeat;
+  -webkit-line-clamp: 2;
+  font-weight: 600;
+  opacity: 0.5;
+}

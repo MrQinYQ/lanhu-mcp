@@ -1,0 +1,84 @@
+{
+  "generator": "lanhu-dds-h5",
+  "frontend": {
+    "retrieved_at": "2026-09-03",
+    "entry": "https://dds.lanhuapp.com/",
+    "sources": [
+      {
+        "url": "https://dds.lanhuapp.com/js/home.ae626768.js",
+        "sha256": "3c716a1b1663cf78ff60effdae37dd4d6fb57a8fad6a3d01331e05243f275e72"
+      },
+      {
+        "url": "https://dds.lanhuapp.com/js/chunk-vendors.07e8c0b9.js",
+        "sha256": "8fea232749187dd3f0b2b0ecb7547ec25dafbeeebf25d78fa75e71e67c85ca0e"
+      }
+    ]
+  },
+  "modules": {
+    "generator": "24c8",
+    "wrapper": "6ce9",
+    "dependencies": [
+      "4362",
+      "9152",
+      "325b",
+      "c8ba",
+      "6b36",
+      "9a5d",
+      "d238",
+      "b639",
+      "1fb5",
+      "e3db",
+      "2ef0",
+      "62e4",
+      "df7c"
+    ]
+  },
+  "dependencies": {
+    "prettier": "2.5.1",
+    "lodash": "4.17.21",
+    "plugins": [
+      "graphql",
+      "html",
+      "postcss"
+    ]
+  },
+  "modifications": [
+    "Extracted the complete HTML generator from webpack module 24c8; removed browser compatibility polyfill imports and the Babel typeof helper.",
+    "Replaced five eval-based loop object-path lookups with a strict own-property path resolver. No schema content is evaluated as JavaScript.",
+    "Extracted 13 transitive dependency modules; module bodies and embedded third-party license notices are preserved.",
+    "Added a JSON stdin/stdout Node.js bridge with input copying and option validation."
+  ],
+  "default_options": {
+    "format": true,
+    "rem": 37.5,
+    "viewportWidth": 375
+  },
+  "outputs": [
+    "index.html",
+    "index.css",
+    "index.rem.css",
+    "index.response.css",
+    "common.css"
+  ],
+  "baseline": {
+    "schema_sha256": "d1056f163aa671ea0239a790949f9520f43e01bfb4c9473c3dab90ef46394cd1",
+    "files": {
+      "index.html": {
+        "sha256": "5cd42fb86d711ffc788b7ab72d314c9cf9ba044400ee56eb2f1bdc3b07b12c36",
+        "equality": "byte-for-byte"
+      },
+      "index.css": {
+        "sha256": "baae9ea23f9edabb26521ffdc362654fe3dfab30660dc4b03e830a1cbd7d2af3",
+        "equality": "byte-for-byte"
+      },
+      "common.css": {
+        "sha256": "91e9608e9c561d58afada59680d227ba74aa0dac98a339571e3acd56d23624ea",
+        "equality": "byte-for-byte"
+      }
+    }
+  },
+  "license": {
+    "official_generator": "No explicit open-source license found in the inspected public frontend assets. Public availability does not establish an open-source license.",
+    "dependency_notices": "Original embedded dependency license notices are retained in dependencies.cjs."
+  }
+}

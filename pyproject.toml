@@ -45,6 +45,7 @@ dependencies = [
     "beautifulsoup4>=4.12.0",
     "playwright>=1.48.0",
     "lxml>=5.0.0",
+    "Pillow>=11.0.0",
 ]
 
 [project.optional-dependencies]
@@ -77,7 +78,10 @@ py-modules = ["lanhu_mcp_server"]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["lanhu_mcp_server*"]
+include = ["lanhu_mcp_server*", "lanhu_codegen*"]
+
+[tool.setuptools.package-data]
+lanhu_codegen = ["*.cjs", "*.js", "*.json", "*.md", "NOTICE", "vendor/*"]
 
 [tool.black]
 line-length = 120
@@ -156,4 +160,3 @@ exclude = [
     "logs",
 ]
 max-complexity = 10
-

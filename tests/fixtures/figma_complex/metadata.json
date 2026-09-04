@@ -1,0 +1,50 @@
+{
+  "image_id": "b4706be3-c700-482b-9a2b-07ecbab9796f",
+  "project_id": "30fd9a8a-d11d-4e07-b3dc-3caa63a7f44b",
+  "name": "结构",
+  "version": {
+    "id": "7703002a-81e1-4653-9494-8638902c1f37",
+    "version_info": "版本5",
+    "json_url": "https://alipic.lanhuapp.com/FigmaJSON4a2ed2c3fb3c00d1661e4f825392a5c9.json",
+    "d2c_url": null,
+    "update_time": null,
+    "create_time": "Thu, 03 Sep 2026 11:06:11 UTC"
+  },
+  "versions": [
+    {
+      "id": "7703002a-81e1-4653-9494-8638902c1f37",
+      "version_info": "版本5",
+      "json_url": "https://alipic.lanhuapp.com/FigmaJSON4a2ed2c3fb3c00d1661e4f825392a5c9.json",
+      "d2c_url": null
+    },
+    {
+      "id": "cb3bd7b1-3f6f-41cf-b5c6-662e3d2b95aa",
+      "version_info": "版本4",
+      "json_url": "https://alipic.lanhuapp.com/FigmaJSON10dacfb1b27fe688aae596e9fd657129.json",
+      "d2c_url": null
+    },
+    {
+      "id": "d4c16c04-250b-45c2-b1a9-24aac4629b34",
+      "version_info": "版本3",
+      "json_url": "https://alipic.lanhuapp.com/FigmaJSON3fb3df7c2296e18351f135174ca70587.json",
+      "d2c_url": null
+    },
+    {
+      "id": "bf8649cb-22c2-4936-8dc8-e59d8b9a80cc",
+      "version_info": "版本2",
+      "json_url": "https://alipic.lanhuapp.com/FigmaJSON0a516fd7b50cb1d043b15790d540df80.json",
+      "d2c_url": null
+    },
+    {
+      "id": "f39ba9a8-9fc9-466b-b34b-a2d7e62094e1",
+      "version_info": "版本1",
+      "json_url": "https://alipic.lanhuapp.com/FigmaJSON0a516fd7b50cb1d043b15790d540df80.json",
+      "d2c_url": null
+    }
+  ],
+  "official_schema_url": "https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/dds_backend/prod/pipeline/schema_a57a70d30b5941c197103ac06d9f8967/schema.json",
+  "sha256": {
+    "raw.json": "6d17648d2a252545d57f8bfe77b1a958309e016efb3aa9b0eb7e55ac6038b259",
+    "official-schema.json": "ccfabb96b87b5d9e09a5cdf6d090eb7a924b87b1bcb3849bf4abc08f9872113f"
+  }
+}
